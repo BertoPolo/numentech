@@ -19,8 +19,6 @@ const CreateUser = () => {
         }
     }
 
-
-
     const handleSubmit = async (e) => {
         e.preventDefault()
         registerBtnRef.current.setAttribute("disabled", "disabled");
@@ -58,13 +56,12 @@ const CreateUser = () => {
     }
 
 
-
     return (
         <>
             <div className="login-container">
 
                 <Form className="p-4 mt-4 rounded" onSubmit={(e) => handleSubmit(e)}>
-                    <h4 className="mb-3">Registration</h4>
+                    <h4 className="mb-3">Sign Up</h4>
 
                     <Form.Group>
                         <Form.Control type="email" placeholder="Email" onChange={(e) => setEmailInput(e.target.value)} />

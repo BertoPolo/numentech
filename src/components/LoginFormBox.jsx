@@ -103,10 +103,11 @@ const FormBox = () => {
 
                     <div className="text-center">
 
-                        <Button className="addToCartButton border-0" type="submit" ref={btnRef} disabled={!isValidEmail(emailInput) || (!passwordInput)} >
+                        <Button className="border-0" type="submit" ref={btnRef} disabled={!isValidEmail(emailInput) || (!passwordInput)} >
                             Login
                         </Button>
-
+                        <Button className="border-0 btn-warning" onClick={() => navigate("/register")}>Sign up</Button>
+                        <Button className="border-0 btn-success" onClick={() => navigate("/home")}>Take a look</Button>
                         <small className="text-muted login-small-font d-block mt-3">© 2024 ALL RIGHTS RESERVED</small>
                     </div>
 
