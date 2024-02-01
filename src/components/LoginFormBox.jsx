@@ -71,11 +71,10 @@ const FormBox = () => {
 
             if (response.ok) {
                 const data = await response.json()
-                // dispatch(changeToken(data.accessToken))
                 logIn(data.accessToken)
 
             } else {
-                // notifyError("Check your credentials again")
+                console.log("Check your credentials again")
                 ableBtn()
                 setIsCharging(false)
                 setIsError(true)
@@ -92,12 +91,11 @@ const FormBox = () => {
         <>
             <Form className="login-container" onSubmit={createToken}>
                 <div className="login-modal">
-
                     <h3 className="mb-3 d-flex">Welcome!</h3>
 
                     <Form.Group>
-                        <div className="d-flex"><Form.Label>Username</Form.Label></div>
-                        <Form.Control type="text" placeholder="Fernando23" value={usernameInput} onChange={(e) => setUsernameInput(e.target.value)} />
+                        <div className="d-flex"><Form.Label>Email</Form.Label></div>
+                        <Form.Control type="text" placeholder="fernando23@num.be" value={usernameInput} onChange={(e) => setUsernameInput(e.target.value)} />
                     </Form.Group>
 
                     <Form.Group>
@@ -112,7 +110,7 @@ const FormBox = () => {
                             Login
                         </Button>
 
-                        <small className="text-muted login-small-font d-block">© 2024 ALL RIGHTS RESERVED</small>
+                        <small className="text-muted login-small-font d-block mt-3">© 2024 ALL RIGHTS RESERVED</small>
                     </div>
 
                 </div >

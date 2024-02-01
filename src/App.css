@@ -1,38 +1,58 @@
-.App {
-  text-align: center;
+Login start */ .loginTitle {
+  font-size: 1.5rem;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.h1SmScreen {
+  display: flex;
+  justify-content: center;
+  font-weight: bolder;
+  font-size: 500% !important;
+  margin-bottom: 3rem !important;
+  margin-top: 1rem;
+  text-shadow: 3px 4px 5px #000000c2;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .h1SmScreen {
+    font-size: 400% !important;
   }
 }
+/* .transparencywWhiteBox {
+  background-color: #e9e3e3a6;
+  color: black;
+  border-radius: 5px;
+} */
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+}
+.login-modal {
+  border: 1px solid #bdbdbd47;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
-.App-link {
-  color: #61dafb;
+.login-small-font {
+  font-size: calc(1px + 2vmin);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+@media (max-width: 575.98px) {
+  .login-small-font {
+    font-size: calc(1px + 2vmin);
   }
 }
+
+.loginBG {
+  background-image: url("../public/background_loginpage.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-color: #cccccc;
+  min-height: 100vh;
+}
+
+/*  Login end */
