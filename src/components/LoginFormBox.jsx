@@ -21,30 +21,6 @@ const FormBox = () => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
 
-    // const logInWithValidAccount = async (token) => {
-
-    //     try {
-    //         const res = await fetch(`${process.env.REACT_APP_SERVER}users/${emailInput}`,
-    //             { headers: { "Authorization": "Bearer " + token }, });
-
-    //         if (res.ok) {
-    //             // const data = await res.json()
-
-    //             localStorage.setItem('accessToken', data.accessToken);
-
-
-    //             navigate("/home")
-
-    //         } else {
-    //             console.log("Check your credentials again")
-    //             ableBtn()
-    //             setIsCharging(false)
-    //         }
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
     const createToken = async (e) => {
         e.preventDefault()
         btnRef.current.setAttribute("disabled", "disabled");
@@ -69,9 +45,10 @@ const FormBox = () => {
 
             if (response.ok) {
                 const data = await response.json()
-                // logInWithValidAccount(data.accessToken)
                 localStorage.setItem('accessToken', data.accessToken);
+                localStorage.setItem('selfAccount', data.email); //not the most secure
                 navigate("/home")
+                setIsCharging(false)
 
             } else {
                 console.log("Check your credentials again")
@@ -81,10 +58,7 @@ const FormBox = () => {
                 setTimeout(() => setIsError(false), 3000)
             }
 
-        } catch (error) {
-            console.log(error)
-        }
-
+        } catch (error) { console.log(error) }
     }
 
     return (
