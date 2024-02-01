@@ -95,7 +95,6 @@ const FormBox = () => {
 
                     <h3 className="mb-3 d-flex">Welcome!</h3>
 
-
                     <Form.Group>
                         <div className="d-flex"><Form.Label>Username</Form.Label></div>
                         <Form.Control type="text" placeholder="Fernando23" value={usernameInput} onChange={(e) => setUsernameInput(e.target.value)} />
