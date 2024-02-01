@@ -17,20 +17,20 @@ const FormBox = () => {
         }
     }
 
-    const logIn = async (token) => {
+    const isValidEmail = email => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
+
+    const logInWithValidAccount = async (token) => {
 
         try {
             const res = await fetch(`${process.env.REACT_APP_SERVER}users/username/${emailInput}`,
-                {
-                    headers: {
-                        "Authorization": "Bearer " + token
-                    },
-                });
+                { headers: { "Authorization": "Bearer " + token }, });
 
             if (res.ok) {
-                const data = await res.json()
+                // const data = await res.json()
 
-
+                // set localStorage as logged
 
                 navigate("/home")
 
@@ -43,7 +43,6 @@ const FormBox = () => {
             console.log(error)
         }
     }
-
 
     const createToken = async (e) => {
         e.preventDefault()
@@ -69,7 +68,7 @@ const FormBox = () => {
 
             if (response.ok) {
                 const data = await response.json()
-                logIn(data.accessToken)
+                logInWithValidAccount(data.accessToken)
 
             } else {
                 console.log("Check your credentials again")
@@ -93,7 +92,7 @@ const FormBox = () => {
 
                     <Form.Group>
                         <div className="d-flex"><Form.Label>Email</Form.Label></div>
-                        <Form.Control type="text" placeholder="fernando23@num.be" value={emailInput} onChange={(e) => setEmailInput(e.target.value)} />
+                        <Form.Control type="email" placeholder="fernando23@num.be" value={emailInput} onChange={(e) => setEmailInput(e.target.value)} />
                     </Form.Group>
 
                     <Form.Group>
@@ -104,7 +103,7 @@ const FormBox = () => {
 
                     <div className="text-center">
 
-                        <Button className="addToCartButton border-0" type="submit" ref={btnRef} disabled={(!emailInput) || (!passwordInput)} >
+                        <Button className="addToCartButton border-0" type="submit" ref={btnRef} disabled={!isValidEmail(emailInput) || (!passwordInput)} >
                             Login
                         </Button>
 
