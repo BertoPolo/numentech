@@ -1,8 +1,13 @@
+import React, { useEffect } from 'react';
 import { Container, Col, Row, Image } from "react-bootstrap"
 import LoginFormBox from "./LoginFormBox";
 
 const Login = () => {
 
+    useEffect(() => {
+        //remove token always, even if you navigate back
+        localStorage.removeItem('accessToken');
+    }, [])
 
     return (
         <>

@@ -64,7 +64,7 @@ const CreateUser = () => {
                     <h4 className="mb-3">Sign Up</h4>
 
                     <Form.Group>
-                        <Form.Control type="email" placeholder="Email" onChange={(e) => setEmailInput(e.target.value)} />
+                        <Form.Control className="mb-2" type="email" placeholder="Email" onChange={(e) => setEmailInput(e.target.value)} />
                         <Form.Control type="password" placeholder="Password" onChange={(e) => setPasswordInput(e.target.value)} />
                     </Form.Group>
 

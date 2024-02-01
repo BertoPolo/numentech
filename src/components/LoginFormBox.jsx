@@ -21,28 +21,29 @@ const FormBox = () => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
 
-    const logInWithValidAccount = async (token) => {
+    // const logInWithValidAccount = async (token) => {
 
-        try {
-            const res = await fetch(`${process.env.REACT_APP_SERVER}users/username/${emailInput}`,
-                { headers: { "Authorization": "Bearer " + token }, });
+    //     try {
+    //         const res = await fetch(`${process.env.REACT_APP_SERVER}users/${emailInput}`,
+    //             { headers: { "Authorization": "Bearer " + token }, });
 
-            if (res.ok) {
-                // const data = await res.json()
+    //         if (res.ok) {
+    //             // const data = await res.json()
 
-                // set localStorage as logged
+    //             localStorage.setItem('accessToken', data.accessToken);
 
-                navigate("/home")
 
-            } else {
-                console.log("Check your credentials again")
-                ableBtn()
-                setIsCharging(false)
-            }
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    //             navigate("/home")
+
+    //         } else {
+    //             console.log("Check your credentials again")
+    //             ableBtn()
+    //             setIsCharging(false)
+    //         }
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
     const createToken = async (e) => {
         e.preventDefault()
@@ -68,7 +69,9 @@ const FormBox = () => {
 
             if (response.ok) {
                 const data = await response.json()
-                logInWithValidAccount(data.accessToken)
+                // logInWithValidAccount(data.accessToken)
+                localStorage.setItem('accessToken', data.accessToken);
+                navigate("/home")
 
             } else {
                 console.log("Check your credentials again")
@@ -106,7 +109,9 @@ const FormBox = () => {
                         <Button className="border-0" type="submit" ref={btnRef} disabled={!isValidEmail(emailInput) || (!passwordInput)} >
                             Login
                         </Button>
+
                         <Button className="border-0 btn-warning" onClick={() => navigate("/register")}>Sign up</Button>
+
                         <Button className="border-0 btn-success" onClick={() => navigate("/home")}>Take a look</Button>
                         <small className="text-muted login-small-font d-block mt-3">© 2024 ALL RIGHTS RESERVED</small>
                     </div>
