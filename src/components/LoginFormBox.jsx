@@ -1,17 +1,15 @@
-import { Container, Form, Button, Row, Spinner } from "react-bootstrap"
+import { Form, Button, Spinner } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import { useState, useRef } from "react"
 
 const FormBox = () => {
-    const [usernameInput, setUsernameInput] = useState("")
+    const [emailInput, setEmailInput] = useState("")
     const [passwordInput, setPasswordInput] = useState("")
     const [isCharging, setIsCharging] = useState(false)
     const [isError, setIsError] = useState(false)
 
-
     const btnRef = useRef()
     const navigate = useNavigate()
-
 
     const ableBtn = e => {
         if (btnRef.current) {
@@ -22,7 +20,7 @@ const FormBox = () => {
     const logIn = async (token) => {
 
         try {
-            const res = await fetch(`${process.env.REACT_APP_SERVER}users/username/${usernameInput}`,
+            const res = await fetch(`${process.env.REACT_APP_SERVER}users/username/${emailInput}`,
                 {
                     headers: {
                         "Authorization": "Bearer " + token
@@ -54,7 +52,7 @@ const FormBox = () => {
         try {
 
             const body = {
-                username: usernameInput,
+                email: emailInput,
                 password: passwordInput
             }
 
@@ -95,7 +93,7 @@ const FormBox = () => {
 
                     <Form.Group>
                         <div className="d-flex"><Form.Label>Email</Form.Label></div>
-                        <Form.Control type="text" placeholder="fernando23@num.be" value={usernameInput} onChange={(e) => setUsernameInput(e.target.value)} />
+                        <Form.Control type="text" placeholder="fernando23@num.be" value={emailInput} onChange={(e) => setEmailInput(e.target.value)} />
                     </Form.Group>
 
                     <Form.Group>
@@ -106,7 +104,7 @@ const FormBox = () => {
 
                     <div className="text-center">
 
-                        <Button className="addToCartButton border-0" type="submit" ref={btnRef} disabled={(!usernameInput) || (!passwordInput)} >
+                        <Button className="addToCartButton border-0" type="submit" ref={btnRef} disabled={(!emailInput) || (!passwordInput)} >
                             Login
                         </Button>
 
