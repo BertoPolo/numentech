@@ -57,16 +57,15 @@ const Home = () => {
         e.preventDefault();
         const title = e.target.title.value
         const task = e.target.task.value
-        const createdBy = localStorage.getItem('selfAccount')
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_SERVER}tasks`, {
+            const response = await fetch(`${process.env.REACT_APP_SERVER}tasks/${selectedTask._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
                 },
-                body: JSON.stringify({ title, task, createdBy })
+                body: JSON.stringify({ title, task })
             });
 
             if (response.ok) {
@@ -75,6 +74,25 @@ const Home = () => {
             }
         } catch (error) {
             console.error('Error al modificar la tarea:', error);
+        }
+
+    }
+    const deleteTask = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_SERVER}tasks/${selectedTask._id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                },
+            });
+
+            if (response.ok) {
+                getTasks()
+                setShowDeleteModal(false)
+            }
+        } catch (error) {
+            console.error('Error al eliminar la tarea:', error);
         }
 
     }
@@ -209,7 +227,7 @@ const Home = () => {
                     <Modal.Body>¿Estás seguro de que quieres eliminar esta tarea?</Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>Cancelar</Button>
-                        <Button variant="danger">Eliminar</Button>
+                        <Button variant="danger" onClick={deleteTask}>Eliminar</Button>
                     </Modal.Footer>
                 </Modal>
             </Container>
