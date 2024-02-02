@@ -83,13 +83,16 @@ const Home = () => {
                                 <p>{task.task}</p>
                                 <p>Creado por: {task.createdBy} - {new Date(task.createdAt).toLocaleString()}</p>
                             </div>
-                            <div>
-                                <PencilSquare onClick={() => handleEditClick(task)} className="me-2" style={{ cursor: 'pointer' }} />
-                                <Trash onClick={() => handleDeleteClick(task)} style={{ cursor: 'pointer' }} />
-                            </div>
+                            {isUserRegistered &&
+                                <div>
+                                    <PencilSquare onClick={() => handleEditClick(task)} className="me-2" style={{ cursor: 'pointer' }} />
+                                    <Trash onClick={() => handleDeleteClick(task)} style={{ cursor: 'pointer' }} />
+                                </div>
+                            }
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
+
                 {isUserRegistered && (
                     <Form onSubmit={createNewTask} className="mt-4">
                         <Row>
