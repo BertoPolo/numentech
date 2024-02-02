@@ -9,6 +9,10 @@ const Home = () => {
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
+    const [showCreateModal, setShowCreateModal] = useState(false);
+
+    const bgColors = ['bg-color-1', 'bg-color-2', 'bg-color-3', 'bg-color-4', 'bg-color-5'];
+
 
     const getTasks = async () => {
         try {
@@ -41,13 +45,39 @@ const Home = () => {
 
             if (response.ok) {
                 getTasks()
+                setShowCreateModal(false)
             }
         } catch (error) {
             console.error('Error al crear la tarea:', error);
         }
     };
 
-    const editTask = () => { }
+    const editTask = async (e) => {
+
+        e.preventDefault();
+        const title = e.target.title.value
+        const task = e.target.task.value
+        const createdBy = localStorage.getItem('selfAccount')
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_SERVER}tasks`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                },
+                body: JSON.stringify({ title, task, createdBy })
+            });
+
+            if (response.ok) {
+                getTasks()
+                setShowEditModal(false)
+            }
+        } catch (error) {
+            console.error('Error al modificar la tarea:', error);
+        }
+
+    }
 
     const handleEditClick = (task) => {
         setSelectedTask(task);
@@ -59,25 +89,28 @@ const Home = () => {
         setShowDeleteModal(true);
     };
 
-    // modal closings
-    const handleCloseEditModal = () => setShowEditModal(false);
-    const handleCloseDeleteModal = () => setShowDeleteModal(false);
-
 
     useEffect(() => {
         getTasks()
     }, [])
 
-    console.log(tasks)
 
     return (
         <>
             <MyNavbar />
             <Container>
-                <h1 className="my-4">Lista de Tareas</h1>
+                <div className="d-flex justify-content-between align-items-center mb-4">
+                    <h1>Lista de Tareas</h1>
+                    {isUserRegistered && (
+                        <Button onClick={() => setShowCreateModal(true)}>Crear Nueva Tarea</Button>
+                    )}
+                </div>
                 <ListGroup>
                     {tasks && tasks.map((task, index) => (
-                        <ListGroup.Item key={task._id} className="d-flex justify-content-between align-items-start">
+                        <ListGroup.Item
+                            key={task._id}
+                            className={` border-0 rounded d-flex justify-content-between align-items-start mb-2 ${bgColors[index % bgColors.length]}`}
+                        >
                             <div>
                                 <h5>{task.title}</h5>
                                 <p>{task.task}</p>
@@ -85,36 +118,53 @@ const Home = () => {
                             </div>
                             {isUserRegistered &&
                                 <div>
-                                    <PencilSquare onClick={() => handleEditClick(task)} className="me-2" style={{ cursor: 'pointer' }} />
-                                    <Trash onClick={() => handleDeleteClick(task)} style={{ cursor: 'pointer' }} />
+                                    <PencilSquare onClick={() => handleEditClick(task)} className="pointer mr-1" style={{ width: "1.3rem", height: "1.3rem" }} />
+                                    <Trash onClick={() => handleDeleteClick(task)} className="pointer mx-1 text-danger" style={{ width: "1.3rem", height: "1.3rem" }} />
                                 </div>
                             }
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
 
-                {isUserRegistered && (
-                    <Form onSubmit={createNewTask} className="mt-4">
-                        <Row>
-                            <Col md={6}>
-                                <Form.Group className="mb-3">
-                                    <Form.Label>Título</Form.Label>
-                                    <Form.Control name="title" type="text" placeholder="Título" required maxLength="20" />
-                                </Form.Group>
-                            </Col>
-                            <Col md={6}>
-                                <Form.Group className="mb-3">
-                                    <Form.Label>Descripción de la tarea</Form.Label>
-                                    <Form.Control name="task" type="text" placeholder="Descripción de la tarea" required maxLength="150" />
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Button variant="primary" type="submit">Crear Tarea</Button>
+
+                {/* MODALS */}
+
+                {/* Create Task */}
+                <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Crear Nueva Tarea</Modal.Title>
+                    </Modal.Header>
+                    <Form onSubmit={(e) => createNewTask(e)}>
+                        <Modal.Body>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Título</Form.Label>
+                                <Form.Control
+                                    name="title"
+                                    type="text"
+                                    placeholder="Título"
+                                    required maxLength="20"
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Descripción de la tarea</Form.Label>
+                                <Form.Control
+                                    name="task"
+                                    as="textarea"
+                                    rows={3}
+                                    placeholder="Descripción de la tarea"
+                                    required maxLength="150"
+                                />
+                            </Form.Group>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={() => setShowCreateModal(false)}>Cerrar</Button>
+                            <Button variant="primary" type="submit">Crear Tarea</Button>
+                        </Modal.Footer>
                     </Form>
-                )}
+                </Modal>
 
                 {/* Edit modal */}
-                <Modal show={showEditModal} onHide={handleCloseEditModal}>
+                <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
                     <Modal.Header closeButton>
                         <Modal.Title>Editar Tarea</Modal.Title>
                     </Modal.Header>
@@ -145,20 +195,20 @@ const Home = () => {
                             </Form.Group>
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button variant="secondary" onClick={handleCloseEditModal}>Cerrar</Button>
+                            <Button variant="secondary" onClick={() => setShowEditModal(false)}>Cerrar</Button>
                             <Button variant="primary" type="submit">Guardar Cambios</Button>
                         </Modal.Footer>
                     </Form>
                 </Modal>
 
                 {/* Delete Modal */}
-                <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+                <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
                     <Modal.Header closeButton>
                         <Modal.Title>Eliminar Tarea</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>¿Estás seguro de que quieres eliminar esta tarea?</Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={handleCloseDeleteModal}>Cancelar</Button>
+                        <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>Cancelar</Button>
                         <Button variant="danger">Eliminar</Button>
                     </Modal.Footer>
                 </Modal>

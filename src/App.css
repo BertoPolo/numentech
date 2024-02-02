@@ -83,3 +83,21 @@
 .pointer {
   cursor: pointer;
 }
+
+/*  */
+.bg-color-1 {
+  background-color: #f0f8ff !important;
+}
+.bg-color-2 {
+  background-color: #faebd7 !important;
+}
+.bg-color-3 {
+  background-color: #bce4d7ab !important;
+}
+.bg-color-4 {
+  background-color: #f0ffff !important;
+}
+.bg-color-5 {
+  background-color: #f5f5dc !important;
+}
+/*  */
