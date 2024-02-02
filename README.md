@@ -84,7 +84,7 @@ To get started with this project, follow the steps below:
 
 Follow these instructions to clone and set up the application on your local machine:
 
-1. You can clone my backend at [https://github.com/BertoPolo/numenbackend](BertoPolo/numenbackend)
+1. You can clone my backend at [https://github.com/BertoPolo/numenbackend]
 2. Clone the repository
    ```sh
    git clone https://github.com/BertoPolo/numentech.git
