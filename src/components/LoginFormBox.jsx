@@ -63,7 +63,7 @@ const FormBox = () => {
 
     return (
         <>
-            <Form className="login-container" onSubmit={createToken}>
+            <Form className="login-container" onSubmit={createToken} style={{ opacity: isCharging ? "0.5" : "1" }}>
                 <div className="login-modal">
                     <h3 className="mb-3 d-flex">Welcome!</h3>
 
@@ -86,7 +86,7 @@ const FormBox = () => {
                         </Button>
                     </div>
 
-                    <Link className="mt-4 d-block text-center" onClick={() => navigate("/home")}><small>I don't have an account</small></Link>
+                    <Link className="mt-4 d-block text-center" to="/home"><small>I don't have an account</small></Link>
 
                     {/* <small className="text-muted text-center login-small-font d-block mt-3">© 2024 ALL RIGHTS RESERVED</small> */}
                 </div >

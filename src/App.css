@@ -12,11 +12,11 @@
     font-size: 400% !important;
   }
 }
-/* .transparencywWhiteBox {
-  background-color: #e9e3e3a6;
+.transparencywWhiteBox {
+  background-color: #f7f7f0;
   color: black;
   border-radius: 5px;
-} */
+}
 
 .buttonLogin {
   background: #0fbcaf !important;
@@ -27,8 +27,24 @@
 .buttonLogin:disabled {
   background: #87d4ce !important;
 }
+
 .btnSignup {
   background: #fcae1e !important;
+}
+.btnSignup:hover {
+  background: #ce8d15 !important;
+}
+
+.btnBack {
+  background: #e84343 !important;
+}
+.btnBack:hover {
+  background: #c63b3b !important;
+}
+
+.registerBg {
+  background: rgb(218, 241, 239);
+  background: linear-gradient(0deg, rgba(218, 241, 239, 1) 0%, rgba(185, 228, 223, 1) 100%);
 }
 
 .login-container {

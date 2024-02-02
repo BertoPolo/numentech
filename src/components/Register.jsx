@@ -12,6 +12,10 @@ const CreateUser = () => {
     const registerBtnRef = useRef()
     const backBtnRef = useRef()
 
+    const isValidEmail = email => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
+
     const ableBtn = e => {
         if (registerBtnRef.current) {
             registerBtnRef.current.removeAttribute("disabled");
@@ -57,10 +61,10 @@ const CreateUser = () => {
 
 
     return (
-        <>
-            <div className="login-container">
+        <div className="d-flex justify-content-center align-items-center registerBg" style={{ minHeight: "100vh" }}>
+            <div className="login-container text-center transparencywWhiteBox p-3">
 
-                <Form className="p-4 mt-4 rounded" onSubmit={(e) => handleSubmit(e)}>
+                <Form className="p-4" onSubmit={(e) => handleSubmit(e)} style={{ opacity: isCharging ? "0.5" : "1" }}>
                     <h4 className="mb-3">Sign Up</h4>
 
                     <Form.Group>
@@ -68,14 +72,14 @@ const CreateUser = () => {
                         <Form.Control type="password" placeholder="Password" onChange={(e) => setPasswordInput(e.target.value)} />
                     </Form.Group>
 
-                    <div>
+                    <div className="mt-4">
 
-                        <Button variant="success" type="submit" ref={registerBtnRef} disabled={!passwordInput || !emailInput}>
+                        <Button className="buttonLogin border-0" type="submit" ref={registerBtnRef} disabled={!isValidEmail(emailInput) || (!passwordInput)}>
                             Register
                         </Button>
 
                         <Link className="ml-2" to="/">
-                            <Button variant="danger" ref={backBtnRef}>
+                            <Button className="border-0 btnBack" ref={backBtnRef}>
                                 Go Back
                             </Button>
                         </Link>
@@ -83,7 +87,7 @@ const CreateUser = () => {
                 </Form >
                 {isCharging && <Spinner animation="border" variant="success" className="position-absolute" />}
             </div>
-        </>
+        </div>
 
     )
 }
