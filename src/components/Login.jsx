@@ -5,7 +5,7 @@ import LoginFormBox from "./LoginFormBox";
 const Login = () => {
 
     useEffect(() => {
-        //remove token always, even if you navigate back
+        //Remove token always, even if you navigate back
         localStorage.removeItem('accessToken');
     }, [])
 

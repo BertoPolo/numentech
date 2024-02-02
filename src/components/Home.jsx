@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Row, Col, Button, Form, ListGroup, Modal } from "react-bootstrap"
-import { PencilSquare, Trash } from 'react-bootstrap-icons';
+import { Container, Button, Form, ListGroup, Modal, Col, Row } from "react-bootstrap"
+import { PencilSquare, Trash, Plus } from 'react-bootstrap-icons';
 import MyNavbar from './Navbar';
 
 const Home = () => {
-    const [tasks, setTasks] = useState([])
     const isUserRegistered = localStorage.getItem('accessToken')
+    const [tasks, setTasks] = useState([])
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
     const [showCreateModal, setShowCreateModal] = useState(false);
 
+    // Array of bg colors for tasks
     const bgColors = ['bg-color-1', 'bg-color-2', 'bg-color-3', 'bg-color-4', 'bg-color-5'];
-
 
     const getTasks = async () => {
         try {
@@ -77,6 +77,7 @@ const Home = () => {
         }
 
     }
+
     const deleteTask = async () => {
         try {
             const response = await fetch(`${process.env.REACT_APP_SERVER}tasks/${selectedTask._id}`, {
@@ -116,30 +117,37 @@ const Home = () => {
     return (
         <>
             <MyNavbar />
-            <Container>
+
+            <Container className='mb-4'>
                 <div className="d-flex justify-content-between align-items-center mb-4">
                     <h1>Lista de Tareas</h1>
                     {isUserRegistered && (
-                        <Button onClick={() => setShowCreateModal(true)}>Crear Nueva Tarea</Button>
+                        <Button className="buttonLogin border-0" onClick={() => setShowCreateModal(true)}>
+                            <Plus className="d-inline-block d-sm-none" />
+                            <span className="d-none d-sm-inline">Nueva Tarea</span>
+                        </Button>
                     )}
                 </div>
+                {/* mapp all the fetched tasks */}
                 <ListGroup>
                     {tasks && tasks.map((task, index) => (
                         <ListGroup.Item
                             key={task._id}
-                            className={` border-0 rounded d-flex justify-content-between align-items-start mb-2 ${bgColors[index % bgColors.length]}`}
+                            className={`border-0 rounded d-flex mb-2 ${bgColors[index % bgColors.length]}`}
                         >
-                            <div>
-                                <h5>{task.title}</h5>
-                                <p>{task.task}</p>
-                                <p>Creado por: {task.createdBy} - {new Date(task.createdAt).toLocaleString()}</p>
-                            </div>
-                            {isUserRegistered &&
-                                <div>
-                                    <PencilSquare onClick={() => handleEditClick(task)} className="pointer mr-1" style={{ width: "1.3rem", height: "1.3rem" }} />
-                                    <Trash onClick={() => handleDeleteClick(task)} className="pointer mx-1 text-danger" style={{ width: "1.3rem", height: "1.3rem" }} />
-                                </div>
-                            }
+                            <Row className="w-100 align-items-center">
+                                <Col xs={10}>
+                                    <h5>{task.title}</h5>
+                                    <p>{task.task}</p>
+                                    <small>Creado por: {task.createdBy} - {new Date(task.createdAt).toLocaleString()}</small>
+                                </Col>
+                                {isUserRegistered &&
+                                    <Col xs={2} className="text-end">
+                                        <PencilSquare onClick={() => handleEditClick(task)} className="pointer me-2" style={{ width: "1.2rem", height: "1.2rem" }} />
+                                        <Trash onClick={() => handleDeleteClick(task)} className="pointer text-danger" style={{ width: "1.2rem", height: "1.2rem" }} />
+                                    </Col>
+                                }
+                            </Row>
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
@@ -163,6 +171,7 @@ const Home = () => {
                                     required maxLength="20"
                                 />
                             </Form.Group>
+
                             <Form.Group className="mb-3">
                                 <Form.Label>Descripción de la tarea</Form.Label>
                                 <Form.Control
@@ -174,6 +183,7 @@ const Home = () => {
                                 />
                             </Form.Group>
                         </Modal.Body>
+
                         <Modal.Footer>
                             <Button variant="secondary" onClick={() => setShowCreateModal(false)}>Cerrar</Button>
                             <Button variant="primary" type="submit">Crear Tarea</Button>
@@ -186,6 +196,7 @@ const Home = () => {
                     <Modal.Header closeButton>
                         <Modal.Title>Editar Tarea</Modal.Title>
                     </Modal.Header>
+
                     <Form onSubmit={(e) => {
                         e.preventDefault();
                         editTask(e, selectedTask._id);
@@ -212,6 +223,7 @@ const Home = () => {
                                 />
                             </Form.Group>
                         </Modal.Body>
+
                         <Modal.Footer>
                             <Button variant="secondary" onClick={() => setShowEditModal(false)}>Cerrar</Button>
                             <Button variant="primary" type="submit">Guardar Cambios</Button>
@@ -224,7 +236,9 @@ const Home = () => {
                     <Modal.Header closeButton>
                         <Modal.Title>Eliminar Tarea</Modal.Title>
                     </Modal.Header>
+
                     <Modal.Body>¿Estás seguro de que quieres eliminar esta tarea?</Modal.Body>
+
                     <Modal.Footer>
                         <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>Cancelar</Button>
                         <Button variant="danger" onClick={deleteTask}>Eliminar</Button>

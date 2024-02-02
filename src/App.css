@@ -1,23 +1,14 @@
-.h1SmScreen {
-  display: flex;
-  justify-content: center;
-  font-weight: bolder;
-  font-size: 500% !important;
-  margin-bottom: 3rem !important;
-  margin-top: 1rem;
-  text-shadow: 3px 4px 5px #000000c2;
+body {
+  font-family: Helvetica !important;
 }
-@media (min-width: 576px) and (max-width: 767.98px) {
-  .h1SmScreen {
-    font-size: 400% !important;
-  }
-}
+
 .transparencywWhiteBox {
   background-color: #f7f7f0;
   color: black;
   border-radius: 5px;
 }
 
+/* Buttons */
 .buttonLogin {
   background: #0fbcaf !important;
 }
@@ -41,11 +32,7 @@
 .btnBack:hover {
   background: #c63b3b !important;
 }
-
-.registerBg {
-  background: rgb(218, 241, 239);
-  background: linear-gradient(0deg, rgba(218, 241, 239, 1) 0%, rgba(185, 228, 223, 1) 100%);
-}
+/*  */
 
 .login-container {
   display: flex;
@@ -53,8 +40,8 @@
   align-items: center;
   justify-content: center;
 }
+
 .login-modal {
-  /* border: 1px solid #bdbdbd47; */
   padding-left: 4rem;
   padding-right: 4rem;
   padding-top: 2rem;
@@ -71,6 +58,16 @@
   }
 }
 
+.pointer {
+  cursor: pointer;
+}
+
+/* Backgrounds */
+.registerBg {
+  background: rgb(218, 241, 239);
+  background: linear-gradient(0deg, rgba(218, 241, 239, 1) 0%, rgba(185, 228, 223, 1) 100%);
+}
+
 .loginBG {
   background-image: url("../public/background_loginpage.jpg");
   background-repeat: no-repeat;
@@ -79,12 +76,6 @@
   background-color: #cccccc;
   min-height: 100vh;
 }
-
-.pointer {
-  cursor: pointer;
-}
-
-/*  */
 .bg-color-1 {
   background-color: #f0f8ff !important;
 }

@@ -1,6 +1,6 @@
 import { Form, Button, Spinner } from "react-bootstrap"
 import { useNavigate, Link } from "react-router-dom"
-import { useState, useRef } from "react"
+import { useState } from "react"
 
 const FormBox = () => {
     const [emailInput, setEmailInput] = useState("")
@@ -8,14 +8,9 @@ const FormBox = () => {
     const [isCharging, setIsCharging] = useState(false)
     const [isError, setIsError] = useState(false)
 
-    const btnRef = useRef()
     const navigate = useNavigate()
 
-    const ableBtn = e => {
-        if (btnRef.current) {
-            btnRef.current.removeAttribute("disabled");
-        }
-    }
+
 
     const isValidEmail = email => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -23,7 +18,6 @@ const FormBox = () => {
 
     const createToken = async (e) => {
         e.preventDefault()
-        btnRef.current.setAttribute("disabled", "disabled");
         setIsCharging(true)
         try {
 
@@ -52,7 +46,6 @@ const FormBox = () => {
 
             } else {
                 console.log("Check your credentials again")
-                ableBtn()
                 setIsCharging(false)
                 setIsError(true)
                 setTimeout(() => setIsError(false), 3000)
@@ -79,9 +72,9 @@ const FormBox = () => {
 
 
                     <div className="d-flex justify-content-around">
-                        <Button className="border-0 btnSignup" onClick={() => navigate("/register")}>Sign up</Button>
+                        <Button className="border-0 btnSignup" onClick={() => navigate("/register")} disabled={isCharging}>Sign up</Button>
 
-                        <Button className="border-0 buttonLogin" type="submit" ref={btnRef} disabled={!isValidEmail(emailInput) || (!passwordInput)} >
+                        <Button className="border-0 buttonLogin" type="submit" disabled={!isValidEmail(emailInput) || (!passwordInput) || isCharging} >
                             Login
                         </Button>
                     </div>
