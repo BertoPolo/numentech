@@ -20,7 +20,6 @@ const FormBox = () => {
         e.preventDefault()
         setIsCharging(true)
         try {
-
             const body = {
                 email: emailInput,
                 password: passwordInput

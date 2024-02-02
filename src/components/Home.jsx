@@ -133,21 +133,19 @@ const Home = () => {
                     {tasks && tasks.map((task, index) => (
                         <ListGroup.Item
                             key={task._id}
-                            className={`border-0 rounded d-flex mb-2 ${bgColors[index % bgColors.length]}`}
+                            className={`border-0 rounded d-flex flex-column justify-content-between mb-2 ${bgColors[index % bgColors.length]}`}
                         >
-                            <Row className="w-100 align-items-center">
-                                <Col xs={10}>
-                                    <h5>{task.title}</h5>
-                                    <p>{task.task}</p>
-                                    <small>Creado por: {task.createdBy} - {new Date(task.createdAt).toLocaleString()}</small>
-                                </Col>
-                                {isUserRegistered &&
-                                    <Col xs={2} className="text-end">
-                                        <PencilSquare onClick={() => handleEditClick(task)} className="pointer me-2" style={{ width: "1.2rem", height: "1.2rem" }} />
-                                        <Trash onClick={() => handleDeleteClick(task)} className="pointer text-danger" style={{ width: "1.2rem", height: "1.2rem" }} />
-                                    </Col>
-                                }
-                            </Row>
+                            <div>
+                                <h5>{task.title}</h5>
+                                <p>{task.task}</p>
+                                <small>Creado por: {task.createdBy} - {new Date(task.createdAt).toLocaleString()}</small>
+                            </div>
+                            {isUserRegistered &&
+                                <div className="d-flex justify-content-end">
+                                    <PencilSquare onClick={() => handleEditClick(task)} className="pointer mx-2" style={{ width: "1.2rem", height: "1.2rem" }} />
+                                    <Trash onClick={() => handleDeleteClick(task)} className="pointer text-danger" style={{ width: "1.2rem", height: "1.2rem" }} />
+                                </div>
+                            }
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
