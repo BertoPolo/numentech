@@ -1,5 +1,5 @@
 import { Form, Button, Spinner } from "react-bootstrap"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { useState, useRef } from "react"
 
 const FormBox = () => {
@@ -78,18 +78,17 @@ const FormBox = () => {
                     </Form.Group>
 
 
-                    <div className="text-center">
+                    <div className="d-flex justify-content-around">
+                        <Button className="border-0 btnSignup" onClick={() => navigate("/register")}>Sign up</Button>
 
-                        <Button className="border-0" type="submit" ref={btnRef} disabled={!isValidEmail(emailInput) || (!passwordInput)} >
+                        <Button className="border-0 buttonLogin" type="submit" ref={btnRef} disabled={!isValidEmail(emailInput) || (!passwordInput)} >
                             Login
                         </Button>
-
-                        <Button className="border-0 btn-warning" onClick={() => navigate("/register")}>Sign up</Button>
-
-                        <Button className="border-0 btn-success" onClick={() => navigate("/home")}>Take a look</Button>
-                        <small className="text-muted login-small-font d-block mt-3">© 2024 ALL RIGHTS RESERVED</small>
                     </div>
 
+                    <Link className="mt-4 d-block text-center" onClick={() => navigate("/home")}><small>I don't have an account</small></Link>
+
+                    {/* <small className="text-muted text-center login-small-font d-block mt-3">© 2024 ALL RIGHTS RESERVED</small> */}
                 </div >
                 {isCharging && <Spinner className="position-absolute" animation="border" variant="success" />
                 }

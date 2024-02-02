@@ -1,5 +1,3 @@
-/* Login start */
-
 .h1SmScreen {
   display: flex;
   justify-content: center;
@@ -20,6 +18,19 @@
   border-radius: 5px;
 } */
 
+.buttonLogin {
+  background: #0fbcaf !important;
+}
+.buttonLogin:hover {
+  background: #0fa599 !important;
+}
+.buttonLogin:disabled {
+  background: #87d4ce !important;
+}
+.btnSignup {
+  background: #fcae1e !important;
+}
+
 .login-container {
   display: flex;
   flex-direction: column;
@@ -27,7 +38,7 @@
   justify-content: center;
 }
 .login-modal {
-  border: 1px solid #bdbdbd47;
+  /* border: 1px solid #bdbdbd47; */
   padding-left: 4rem;
   padding-right: 4rem;
   padding-top: 2rem;
@@ -53,4 +64,6 @@
   min-height: 100vh;
 }
 
-/*  Login end */
+.pointer {
+  cursor: pointer;
+}

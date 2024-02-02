@@ -112,6 +112,7 @@ const Home = () => {
                         <Button variant="primary" type="submit">Crear Tarea</Button>
                     </Form>
                 )}
+
                 {/* Edit modal */}
                 <Modal show={showEditModal} onHide={handleCloseEditModal}>
                     <Modal.Header closeButton>
