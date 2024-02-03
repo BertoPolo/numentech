@@ -5,7 +5,8 @@ export function getCreatedBy() {
   const token = localStorage.getItem("accessToken")
   if (token) {
     const decoded = jwtDecode(token)
-    return decoded
+    console.log(decoded.email)
+    return decoded.email
   }
   return null
 }
