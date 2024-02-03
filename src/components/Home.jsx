@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Button, Form, ListGroup, Modal, Col, Row } from "react-bootstrap"
-import { PencilSquare, Trash, Plus } from 'react-bootstrap-icons';
-import MyNavbar from './Navbar';
+import { Link } from 'react-router-dom'
+import { Container, Button, Form, ListGroup, Modal } from "react-bootstrap"
+import { PencilSquare, Trash, Plus } from 'react-bootstrap-icons'
+import { getCreatedBy } from "../tools/index"
+import MyNavbar from './Navbar'
 
 const Home = () => {
     const isUserRegistered = localStorage.getItem('accessToken')
@@ -31,7 +33,7 @@ const Home = () => {
         e.preventDefault();
         const title = e.target.title.value
         const task = e.target.task.value
-        const createdBy = localStorage.getItem('selfAccount')
+        const createdBy = getCreatedBy()
 
         try {
             const response = await fetch(`${process.env.REACT_APP_SERVER}tasks`, {
@@ -108,6 +110,13 @@ const Home = () => {
         setShowDeleteModal(true);
     };
 
+    const handleClickScroll = () => {
+        const element = document.getElementById('task-list');
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
 
     useEffect(() => {
         getTasks()
@@ -118,9 +127,9 @@ const Home = () => {
         <>
             <MyNavbar />
 
-            <Container className='mb-4'>
+            <Container className='mb-4 ' id='task-list'>
                 <div className="d-flex justify-content-between align-items-center mb-4">
-                    <h1>Lista de Tareas</h1>
+                    <h1 id='task-list'>Lista de Tareas</h1>
                     {isUserRegistered && (
                         <Button className="buttonLogin border-0" onClick={() => setShowCreateModal(true)}>
                             <Plus className="d-inline-block d-sm-none" />
@@ -128,7 +137,7 @@ const Home = () => {
                         </Button>
                     )}
                 </div>
-                {/* mapp all the fetched tasks */}
+                {/* map all the fetched tasks */}
                 <ListGroup>
                     {tasks && tasks.map((task, index) => (
                         <ListGroup.Item
@@ -242,6 +251,8 @@ const Home = () => {
                         <Button variant="danger" onClick={deleteTask}>Eliminar</Button>
                     </Modal.Footer>
                 </Modal>
+
+                <p className="pointer mt-3" onClick={handleClickScroll}>Volver arriba</p>
             </Container>
         </>
     );

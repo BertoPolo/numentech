@@ -2,6 +2,7 @@ import { Form, Button, Spinner } from "react-bootstrap"
 import { useNavigate, Link } from "react-router-dom"
 import { useState } from "react"
 
+
 const FormBox = () => {
     const [emailInput, setEmailInput] = useState("")
     const [passwordInput, setPasswordInput] = useState("")
@@ -9,6 +10,7 @@ const FormBox = () => {
     const [isError, setIsError] = useState(false)
 
     const navigate = useNavigate()
+
 
 
 
@@ -39,18 +41,19 @@ const FormBox = () => {
             if (response.ok) {
                 const data = await response.json()
                 localStorage.setItem('accessToken', data.accessToken);
-                localStorage.setItem('selfAccount', data.email); //not the most secure
+                // localStorage.setItem('selfAccount', data.email);
                 navigate("/home")
-                setIsCharging(false)
-
             } else {
                 console.log("Check your credentials again")
-                setIsCharging(false)
                 setIsError(true)
                 setTimeout(() => setIsError(false), 3000)
             }
 
         } catch (error) { console.log(error) }
+        finally {
+            setIsCharging(false)
+
+        }
     }
 
     return (
