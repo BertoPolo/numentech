@@ -14,7 +14,7 @@ const Login = () => {
 
             {/* ONLY extra-small screens */}
             <Container fluid className="d-sm-none loginBG text-white">
-                <Image className="pt-3" style={{ maxHeight: "20vh", maxWidth: "25vw" }} src="https://numentech.es/wp-content/uploads/2022/09/Recurso-20.png" alt="Numentech"></Image>
+                <Image className="pt-3" style={{ maxHeight: "20vh", maxWidth: "25vw" }} src="" alt="Numentech"></Image>
 
                 <div className="transparencywWhiteBox p-3 mt-5">
                     <LoginFormBox />
@@ -26,7 +26,7 @@ const Login = () => {
             <Container fluid className="d-none d-sm-block">
                 <Row>
                     <Col className="d-flex flex-column">
-                        <Image className="mb-4 mt-3 ml-auto mr-auto" style={{ maxHeight: "20vh", maxWidth: "25vw" }} src="https://numentech.es/wp-content/uploads/2022/09/Recurso-20.png" alt="Numentech"></Image>
+                        <Image className="mb-4 mt-3 ml-auto mr-auto" style={{ maxHeight: "20vh", maxWidth: "25vw" }} src="" alt="Numentech"></Image>
                         <LoginFormBox />
                     </Col>
 
