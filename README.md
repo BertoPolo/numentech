@@ -20,7 +20,7 @@
     To do List
     <br />
     <br />
-    <a href="https://numen.vercel.app" target="_blank" rel="noopener noreferrer">View Demo</a>  
+    <a href="https://todolist-interface.vercel.app" target="_blank" rel="noopener noreferrer">View Demo</a>  
   </p>
 </div>
 
@@ -84,10 +84,10 @@ To get started with this project, follow the steps below:
 
 Follow these instructions to clone and set up the application on your local machine:
 
-1. You can clone my backend at [https://github.com/BertoPolo/numenbackend]
+1. You can clone my backend at [https://github.com/BertoPolo/todolist-backend]
 2. Clone the repository
    ```sh
-   git clone https://github.com/BertoPolo/numentech.git
+   git clone https://github.com/BertoPolo/todolist-interface.git
    ```
 3. Install NPM packages
    ```sh
