@@ -1,5 +1,5 @@
 {
-  "name": "numentech",
+  "name": "todolist-interface",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
