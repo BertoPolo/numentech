@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { Container, Button, Form, ListGroup, Modal } from "react-bootstrap"
 import { PencilSquare, Trash, Plus } from 'react-bootstrap-icons'
 import { getCreatedBy } from "../tools/index"
@@ -129,11 +128,11 @@ const Home = () => {
 
             <Container className='mb-4 ' id='task-list'>
                 <div className="d-flex justify-content-between align-items-center mb-4">
-                    <h1 id='task-list'>Lista de Tareas</h1>
+                    <h1 id='task-list'>Task List</h1>
                     {isUserRegistered && (
                         <Button className="buttonLogin border-0" onClick={() => setShowCreateModal(true)}>
                             <Plus className="d-inline-block d-sm-none" />
-                            <span className="d-none d-sm-inline">Nueva Tarea</span>
+                            <span className="d-none d-sm-inline">New Task</span>
                         </Button>
                     )}
                 </div>
@@ -147,7 +146,7 @@ const Home = () => {
                             <div>
                                 <h5>{task.title}</h5>
                                 <p>{task.task}</p>
-                                <small>Creado por: {task.createdBy} - {new Date(task.createdAt).toLocaleString()}</small>
+                                <small>Created by: {task.createdBy} - {new Date(task.createdAt).toLocaleString()}</small>
                             </div>
                             {isUserRegistered &&
                                 <div className="d-flex justify-content-end">
@@ -165,12 +164,12 @@ const Home = () => {
                 {/* Create Task */}
                 <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Crear Nueva Tarea</Modal.Title>
+                        <Modal.Title>Create New Task</Modal.Title>
                     </Modal.Header>
                     <Form onSubmit={(e) => createNewTask(e)}>
                         <Modal.Body>
                             <Form.Group className="mb-3">
-                                <Form.Label>Título</Form.Label>
+                                <Form.Label>Title</Form.Label>
                                 <Form.Control
                                     name="title"
                                     type="text"
@@ -180,7 +179,7 @@ const Home = () => {
                             </Form.Group>
 
                             <Form.Group className="mb-3">
-                                <Form.Label>Descripción de la tarea</Form.Label>
+                                <Form.Label>Task Description</Form.Label>
                                 <Form.Control
                                     name="task"
                                     as="textarea"
@@ -192,8 +191,8 @@ const Home = () => {
                         </Modal.Body>
 
                         <Modal.Footer>
-                            <Button variant="secondary" onClick={() => setShowCreateModal(false)}>Cerrar</Button>
-                            <Button variant="primary" type="submit">Crear Tarea</Button>
+                            <Button variant="secondary" onClick={() => setShowCreateModal(false)}>Close</Button>
+                            <Button variant="primary" type="submit">Creat Task</Button>
                         </Modal.Footer>
                     </Form>
                 </Modal>
@@ -201,7 +200,7 @@ const Home = () => {
                 {/* Edit modal */}
                 <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Editar Tarea</Modal.Title>
+                        <Modal.Title>Edit Task</Modal.Title>
                     </Modal.Header>
 
                     <Form onSubmit={(e) => {
@@ -210,7 +209,7 @@ const Home = () => {
                     }}>
                         <Modal.Body>
                             <Form.Group className="mb-3">
-                                <Form.Label>Título</Form.Label>
+                                <Form.Label>Title</Form.Label>
                                 <Form.Control
                                     name="title"
                                     type="text"
@@ -220,7 +219,7 @@ const Home = () => {
                             </Form.Group>
 
                             <Form.Group className="mb-3">
-                                <Form.Label>Descripción de la tarea</Form.Label>
+                                <Form.Label>Task Description</Form.Label>
                                 <Form.Control
                                     name="task"
                                     as="textarea"
@@ -232,8 +231,8 @@ const Home = () => {
                         </Modal.Body>
 
                         <Modal.Footer>
-                            <Button variant="secondary" onClick={() => setShowEditModal(false)}>Cerrar</Button>
-                            <Button variant="primary" type="submit">Guardar Cambios</Button>
+                            <Button variant="secondary" onClick={() => setShowEditModal(false)}>Close</Button>
+                            <Button variant="primary" type="submit">Save Changes</Button>
                         </Modal.Footer>
                     </Form>
                 </Modal>
@@ -241,18 +240,18 @@ const Home = () => {
                 {/* Delete Modal */}
                 <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Eliminar Tarea</Modal.Title>
+                        <Modal.Title>Delete Task</Modal.Title>
                     </Modal.Header>
 
-                    <Modal.Body>¿Estás seguro de que quieres eliminar esta tarea?</Modal.Body>
+                    <Modal.Body>Are you sure you want to delete this task?</Modal.Body>
 
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>Cancelar</Button>
-                        <Button variant="danger" onClick={deleteTask}>Eliminar</Button>
+                        <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>Cancel</Button>
+                        <Button variant="danger" onClick={deleteTask}>Delete</Button>
                     </Modal.Footer>
                 </Modal>
 
-                <p className="pointer mt-3" onClick={handleClickScroll}>Volver arriba</p>
+                <p className="pointer mt-3" onClick={handleClickScroll}>Back to top</p>
             </Container>
         </>
     );

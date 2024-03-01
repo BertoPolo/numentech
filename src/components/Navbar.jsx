@@ -17,7 +17,7 @@ const MyNavbar = () => {
             <Container>
                 <Navbar.Brand href="/home">
                     <Image
-                        src="https://numentech.es/wp-content/uploads/2022/09/Recurso-20.png"
+                        src=''
                         className="d-inline-block align-top"
                         alt="Logo de la empresa"
                         style={{ height: "7vh", width: "auto" }}
