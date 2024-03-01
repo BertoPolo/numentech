@@ -14,9 +14,9 @@ const Login = () => {
 
             {/* ONLY extra-small screens */}
             <Container fluid className="d-sm-none loginBG text-white">
-                <Image className="pt-3" style={{ maxHeight: "20vh", maxWidth: "25vw" }} src="/company-logo.png" alt="Company logo" />
+                <Image className="pt-4" style={{ maxHeight: "20vh", maxWidth: "25vw" }} src="/company-logo.png" alt="Company logo" />
 
-                <div className="transparencywWhiteBox p-3 mt-5">
+                <div className="transparencywWhiteBox p-3 mt-4">
                     <LoginFormBox />
                 </div>
 

@@ -17,9 +17,8 @@ const MyNavbar = () => {
             <Container>
                 <Navbar.Brand href="/home">
                     <Image
-                        src=''
+                        src="/company-logo.png" alt="Company logo"
                         className="d-inline-block align-top"
-                        alt="Logo de la empresa"
                         style={{ height: "7vh", width: "auto" }}
                     />
 

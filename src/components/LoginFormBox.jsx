@@ -11,9 +11,6 @@ const FormBox = () => {
 
     const navigate = useNavigate()
 
-
-
-
     const isValidEmail = email => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };

@@ -127,8 +127,9 @@ const Home = () => {
             <MyNavbar />
 
             <Container className='mb-4 ' id='task-list'>
-                <div className="d-flex justify-content-between align-items-center mb-4">
-                    <h1 id='task-list'>Task List</h1>
+                <div className="d-flex justify-content-between align-items-center my-4">
+                    {/* <h1 id='task-list'>Task List</h1> */}
+                    <span></span>
                     {isUserRegistered && (
                         <Button className="buttonLogin border-0" onClick={() => setShowCreateModal(true)}>
                             <Plus className="d-inline-block d-sm-none" />
