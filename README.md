@@ -14,7 +14,7 @@
 <br />
 <div align="center">
   
-  <h1 align="center">Todolist-interface</h1>
+  <h1 align="center">TaskWave-interface</h1>
 
    <p align="center">
     To do List
