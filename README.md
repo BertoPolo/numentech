@@ -62,7 +62,7 @@ user@user.com / 123
 
 ### About The Project
 
-To do list management
+Intuitive and aesthetically pleasing task management application that enhances personal productivity and organization. TaskWave offers a straightforward and user-friendly interface, allowing users to sign up and log in to manage their tasks with ease. Full CRUD functionality is accessible to registered users, enabling the creation, reading, updating, and deletion of tasks efficiently, while unregistered users can browse the task list in read-only mode. Designed for general use, TaskWave stands out for its focus on a seamless user experience and attractive design, making task management a more enjoyable and less cumbersome experience.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
