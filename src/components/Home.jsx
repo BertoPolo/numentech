@@ -145,9 +145,9 @@ const Home = () => {
                             className={`border-0 rounded d-flex flex-column justify-content-between mb-2 ${bgColors[index % bgColors.length]}`}
                         >
                             <div>
-                                <h5>{task.title}</h5>
+                                <h5 className='font-weight-bold'>{task.title}</h5>
                                 <p>{task.task}</p>
-                                <small>Created by: {task.createdBy} - {new Date(task.createdAt).toLocaleString()}</small>
+                                <small className='text-muted'>Created by: {task.createdBy} - {new Date(task.createdAt).toLocaleString()}</small>
                             </div>
                             {isUserRegistered &&
                                 <div className="d-flex justify-content-end">
