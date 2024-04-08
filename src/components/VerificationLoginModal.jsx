@@ -19,12 +19,12 @@ const VerificationLoginModal = () => {
 
     const submitCode = () => {
         const code = codes.join('');
-        console.log("Código ingresado:", code);
+        console.log("Inserted code: ", code);
     };
     return (
         <div className="position-absolute" id="verificationModal">
             <div>
-                <h2>Ingrese el Código de Verificación</h2>
+                <h2>Insert your verification code</h2>
                 <div id="codeInputContainer">
                     {codes.map((code, index) => (
                         <input
@@ -38,7 +38,7 @@ const VerificationLoginModal = () => {
                         />
                     ))}
                 </div>
-                <button onClick={submitCode}>Verificar</button>
+                <button onClick={submitCode}>Verify</button>
             </div>
         </div>
     )
