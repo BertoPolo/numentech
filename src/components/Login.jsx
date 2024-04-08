@@ -6,8 +6,12 @@ import VerificationLoginModal from "./VerificationLoginModal"
 
 
 const Login = () => {
-    const [isVerifiying, setIsVerifiying] = useState(false)
+    const [isVerifiying, setIsVerifiying] = useState(true)
 
+    const handleVerifyingState = (data) => {
+        setIsVerifiying(data);
+        console.log('Data received from child:', data);
+    };
 
     useEffect(() => {
         //Remove token always, even if you navigate back
@@ -23,7 +27,7 @@ const Login = () => {
                     <Image className="pt-4" style={{ maxHeight: "20vh", maxWidth: "25vw" }} src="/company-logo.png" alt="Company logo" />
 
                     <div className="transparencywWhiteBox p-3 mt-4">
-                        <LoginFormBox />
+                        <LoginFormBox isVerifiying={handleVerifyingState} />
                     </div>
 
                 </Container>
@@ -33,7 +37,7 @@ const Login = () => {
                     <Row>
                         <Col className="d-flex flex-column">
                             <Image className="mb-4 mt-3 ml-auto mr-auto" style={{ maxHeight: "20vh", maxWidth: "25vw" }} src="/company-logo.png" alt="Company logo" />
-                            <LoginFormBox />
+                            <LoginFormBox isVerifiying={handleVerifyingState} />
                         </Col>
 
                         <Col className="login-container loginBG"></Col>
@@ -41,7 +45,7 @@ const Login = () => {
                 </Container>
             </div>
 
-            {isVerifiying && <VerificationLoginModal />}
+            {isVerifiying && <VerificationLoginModal isVerifiying={handleVerifyingState} />}
         </>
     )
 }

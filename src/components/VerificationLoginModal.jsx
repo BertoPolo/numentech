@@ -1,6 +1,6 @@
 import React, { useState, createRef, useEffect } from 'react';
 
-const VerificationLoginModal = () => {
+const VerificationLoginModal = ({ isVerifiying }) => {
     const [codes, setCodes] = useState(Array(5).fill(''));
 
     const inputRefs = Array(5).fill().map(() => createRef());
@@ -21,6 +21,7 @@ const VerificationLoginModal = () => {
         const code = codes.join('');
         console.log("Inserted code: ", code);
         // verifying call
+        isVerifiying(false)
     };
 
     useEffect(() => {

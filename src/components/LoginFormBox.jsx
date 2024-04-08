@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom"
 import { useState } from "react"
 
 
-const FormBox = () => {
+const FormBox = ({ isVerifiying }) => {
     const [emailInput, setEmailInput] = useState("")
     const [passwordInput, setPasswordInput] = useState("")
     const [isCharging, setIsCharging] = useState(false)
