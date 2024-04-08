@@ -1,7 +1,6 @@
 import { Form, Button, Spinner } from "react-bootstrap"
 import { useNavigate, Link } from "react-router-dom"
 import { useState } from "react"
-import VerificationLoginModal from "./VerificationLoginModal"
 
 
 const FormBox = () => {
@@ -9,7 +8,6 @@ const FormBox = () => {
     const [passwordInput, setPasswordInput] = useState("")
     const [isCharging, setIsCharging] = useState(false)
     const [isError, setIsError] = useState(false)
-    const [isVerifiying, setIsVerifiying] = useState(true)
 
     const navigate = useNavigate()
 
@@ -58,7 +56,7 @@ const FormBox = () => {
 
     return (
         <>
-            <Form className="login-container" onSubmit={createToken} style={{ opacity: isCharging || isVerifiying ? "0.5" : "1" }}>
+            <Form className="login-container" onSubmit={createToken} style={{ opacity: isCharging ? "0.5" : "1" }}>
                 <div className="login-modal">
                     <h3 className="mb-3 d-flex">Welcome!</h3>
 
@@ -85,7 +83,6 @@ const FormBox = () => {
 
                     {/* <small className="text-muted text-center login-small-font d-block mt-3">© 2024 ALL RIGHTS RESERVED</small> */}
                 </div >
-                {isVerifiying && <VerificationLoginModal />}
                 {isCharging && <Spinner className="position-absolute" animation="border" variant="success" />}
                 {isError && <Spinner className="position-absolute" animation="grow" variant="danger" />}
 
