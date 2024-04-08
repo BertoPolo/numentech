@@ -19,3 +19,5 @@
 - Option to erase your account
 
 - Change favicon
+
+- Check family font

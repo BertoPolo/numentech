@@ -53,7 +53,6 @@ const FormBox = ({ isVerifiying }) => {
         }
     }
 
-
     return (
         <>
             <Form className="login-container" onSubmit={createToken} style={{ opacity: isCharging ? "0.5" : "1" }}>

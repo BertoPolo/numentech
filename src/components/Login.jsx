@@ -6,7 +6,7 @@ import VerificationLoginModal from "./VerificationLoginModal"
 
 
 const Login = () => {
-    const [isVerifiying, setIsVerifiying] = useState(true)
+    const [isVerifiying, setIsVerifiying] = useState(false)
 
     const handleVerifyingState = (data) => {
         setIsVerifiying(data);
