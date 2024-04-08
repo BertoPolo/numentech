@@ -160,7 +160,6 @@ const Home = () => {
                     ))}
                 </ListGroup>
 
-
                 {/* MODALS */}
 
                 {/* Create Task */}

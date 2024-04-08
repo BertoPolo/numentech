@@ -1,6 +1,7 @@
 import { Form, Button, Spinner } from "react-bootstrap"
 import { useNavigate, Link } from "react-router-dom"
 import { useState } from "react"
+import VerificationLoginModal from "./VerificationLoginModal"
 
 
 const FormBox = () => {
@@ -8,6 +9,7 @@ const FormBox = () => {
     const [passwordInput, setPasswordInput] = useState("")
     const [isCharging, setIsCharging] = useState(false)
     const [isError, setIsError] = useState(false)
+    const [isVerifiying, setIsVerifiying] = useState(true)
 
     const navigate = useNavigate()
 
@@ -53,15 +55,16 @@ const FormBox = () => {
         }
     }
 
+
     return (
         <>
-            <Form className="login-container" onSubmit={createToken} style={{ opacity: isCharging ? "0.5" : "1" }}>
+            <Form className="login-container" onSubmit={createToken} style={{ opacity: isCharging || isVerifiying ? "0.5" : "1" }}>
                 <div className="login-modal">
                     <h3 className="mb-3 d-flex">Welcome!</h3>
 
                     <Form.Group>
                         <div className="d-flex"><Form.Label>Email</Form.Label></div>
-                        <Form.Control type="email" placeholder="fernando23@num.be" value={emailInput} onChange={(e) => setEmailInput(e.target.value)} />
+                        <Form.Control type="email" placeholder="fernando23@taskwave.be" value={emailInput} onChange={(e) => setEmailInput(e.target.value)} />
                     </Form.Group>
 
                     <Form.Group>
@@ -82,9 +85,10 @@ const FormBox = () => {
 
                     {/* <small className="text-muted text-center login-small-font d-block mt-3">© 2024 ALL RIGHTS RESERVED</small> */}
                 </div >
-                {isCharging && <Spinner className="position-absolute" animation="border" variant="success" />
-                }
+                {isVerifiying && <VerificationLoginModal />}
+                {isCharging && <Spinner className="position-absolute" animation="border" variant="success" />}
                 {isError && <Spinner className="position-absolute" animation="grow" variant="danger" />}
+
             </Form >
 
 
