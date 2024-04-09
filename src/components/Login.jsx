@@ -7,9 +7,14 @@ import VerificationLoginModal from "./VerificationLoginModal"
 
 const Login = () => {
     const [isVerifiying, setIsVerifiying] = useState(false)
+    const [isVerified, setIsVerified] = useState(false)
 
     const handleVerifyingState = (data) => {
         setIsVerifiying(data);
+    };
+
+    const handleVerifiedState = (data) => {
+        setIsVerified(data);
     };
 
     useEffect(() => {
@@ -26,7 +31,7 @@ const Login = () => {
                     <Image className="pt-4" style={{ maxHeight: "20vh", maxWidth: "25vw" }} src="/company-logo.png" alt="Company logo" />
 
                     <div className="transparencywWhiteBox p-3 mt-4">
-                        <LoginFormBox isVerifiying={handleVerifyingState} />
+                        <LoginFormBox setIsVerifiying={handleVerifyingState} setIsVerified={handleVerifiedState} />
                     </div>
 
                 </Container>
@@ -36,7 +41,7 @@ const Login = () => {
                     <Row>
                         <Col className="d-flex flex-column">
                             <Image className="mb-4 mt-3 ml-auto mr-auto" style={{ maxHeight: "20vh", maxWidth: "25vw" }} src="/company-logo.png" alt="Company logo" />
-                            <LoginFormBox isVerifiying={handleVerifyingState} />
+                            <LoginFormBox setIsVerifiying={handleVerifyingState} setIsVerified={handleVerifiedState} />
                         </Col>
 
                         <Col className="login-container loginBG"></Col>
@@ -44,7 +49,7 @@ const Login = () => {
                 </Container>
             </div>
 
-            {isVerifiying && <VerificationLoginModal isVerifiying={handleVerifyingState} />}
+            {isVerifiying && <VerificationLoginModal setIsVerifiying={handleVerifyingState} setIsVerified={handleVerifiedState} />}
         </>
     )
 }

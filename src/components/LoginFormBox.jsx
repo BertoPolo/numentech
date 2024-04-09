@@ -1,9 +1,10 @@
 import { Form, Button, Spinner } from "react-bootstrap"
 import { useNavigate, Link } from "react-router-dom"
 import { useState } from "react"
+import { useEffect } from "react"
 
 
-const FormBox = ({ isVerifiying }) => {
+const FormBox = ({ setIsVerifiying, setIsVerified }) => {
     const [emailInput, setEmailInput] = useState("")
     const [passwordInput, setPasswordInput] = useState("")
     const [isCharging, setIsCharging] = useState(false)
@@ -53,11 +54,13 @@ const FormBox = ({ isVerifiying }) => {
         }
     }
 
-
+    useEffect(() => {
+        createToken()
+    }, []);
 
     return (
         <>
-            <Form className="login-container" onSubmit={(e) => { isVerifiying(true); e.preventDefault() }} style={{ opacity: isCharging ? "0.5" : "1" }}>
+            <Form className="login-container" onSubmit={(e) => { setIsVerifiying(true); e.preventDefault() }} style={{ opacity: isCharging ? "0.5" : "1" }}>
                 <div className="login-modal">
                     <h3 className="mb-3 d-flex">Welcome!</h3>
 
