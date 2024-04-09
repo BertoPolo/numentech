@@ -53,9 +53,11 @@ const FormBox = ({ isVerifiying }) => {
         }
     }
 
+
+
     return (
         <>
-            <Form className="login-container" onSubmit={createToken} style={{ opacity: isCharging ? "0.5" : "1" }}>
+            <Form className="login-container" onSubmit={(e) => { isVerifiying(true); e.preventDefault() }} style={{ opacity: isCharging ? "0.5" : "1" }}>
                 <div className="login-modal">
                     <h3 className="mb-3 d-flex">Welcome!</h3>
 

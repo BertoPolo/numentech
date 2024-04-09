@@ -10,7 +10,6 @@ const Login = () => {
 
     const handleVerifyingState = (data) => {
         setIsVerifiying(data);
-        console.log('Data received from child:', data);
     };
 
     useEffect(() => {
