@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useEffect } from "react"
 
 
-const FormBox = ({ setIsVerifiying, setIsVerified }) => {
+const FormBox = ({ setIsVerifiying, setIsVerified, isVerified }) => {
     const [emailInput, setEmailInput] = useState("")
     const [passwordInput, setPasswordInput] = useState("")
     const [isCharging, setIsCharging] = useState(false)
@@ -16,8 +16,7 @@ const FormBox = ({ setIsVerifiying, setIsVerified }) => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
 
-    const createToken = async (e) => {
-        e.preventDefault()
+    const createToken = async () => {
         setIsCharging(true)
         try {
             const body = {
@@ -26,14 +25,11 @@ const FormBox = ({ setIsVerifiying, setIsVerified }) => {
             }
 
             const response = await fetch(`${process.env.REACT_APP_SERVER}users/login`, {
-
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-
                 body: JSON.stringify(body),
-
             });
 
             if (response.ok) {
@@ -50,13 +46,13 @@ const FormBox = ({ setIsVerifiying, setIsVerified }) => {
         } catch (error) { console.log(error) }
         finally {
             setIsCharging(false)
-
         }
     }
 
     useEffect(() => {
-        createToken()
-    }, []);
+        if (isVerified) createToken()
+
+    }, [isVerified]);
 
     return (
         <>

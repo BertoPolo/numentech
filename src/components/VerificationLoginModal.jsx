@@ -1,6 +1,8 @@
 import React, { useState, createRef, useEffect } from 'react';
 
+
 const VerificationLoginModal = ({ setIsVerifiying, setIsVerified }) => {
+
     const [codes, setCodes] = useState(Array(5).fill(''));
 
     const inputRefs = Array(5).fill().map(() => createRef());
@@ -21,7 +23,11 @@ const VerificationLoginModal = ({ setIsVerifiying, setIsVerified }) => {
         const code = codes.join('');
         console.log("Inserted code: ", code);
         // verifying call
+
+        // if (res.ok) {
         setIsVerifiying(false)
+        setIsVerified(true)
+        // }
     };
 
     useEffect(() => {
@@ -30,6 +36,7 @@ const VerificationLoginModal = ({ setIsVerifiying, setIsVerified }) => {
             submitCode();
         }
     }, [codes]);
+
     return (
         <div className="position-absolute px-2" id="verificationModal">
             <div className='text-center'>
