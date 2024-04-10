@@ -148,7 +148,7 @@ const Home = () => {
                                 <h5 className='font-weight-bold'>{task.title}</h5>
                                 <p>{task.task}</p>
                                 <small className='text-muted'>Created by: {task.createdBy} - {new Date(task.createdAt).toLocaleString()}</small>
-                                <small className='text-muted d-block'>Updated by: {task.createdBy} - {new Date(task.updatedAt).toLocaleString()}</small>
+                                <small className='text-muted d-block'>Updated on: {new Date(task.updatedAt).toLocaleString()}</small>
                             </div>
                             {isUserRegistered &&
                                 <div className="d-flex justify-content-end">
