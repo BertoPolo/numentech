@@ -23,3 +23,5 @@
 - Check family font
 
 - is the backend allowing to register an user with existing credentials?
+
+- check not needed "!important" from css
