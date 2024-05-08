@@ -28,7 +28,7 @@ const Login = () => {
 
                 {/* ONLY extra-small screens */}
                 <Container fluid className="d-sm-none loginBG text-white">
-                    <Image className="pt-4" style={{ maxHeight: "20vh", maxWidth: "25vw" }} src="/company-logo.png" alt="Company logo" />
+                    <Image className="pt-4" style={{ maxHeight: "20vh", maxWidth: "25vw" }} src="/taskwave_nobg.png" alt="Company logo" />
 
                     <div className="transparencywWhiteBox p-3 mt-4">
                         <LoginFormBox setIsVerifiying={handleVerifyingState} setIsVerified={handleVerifiedState} isVerified={isVerified} />
@@ -40,7 +40,7 @@ const Login = () => {
                 <Container fluid className="d-none d-sm-block">
                     <Row>
                         <Col className="d-flex flex-column">
-                            <Image className="mb-4 mt-3 ml-auto mr-auto" style={{ maxHeight: "20vh", maxWidth: "25vw" }} src="/company-logo.png" alt="Company logo" />
+                            <Image className="mb-4 mt-3 ml-auto mr-auto" style={{ maxHeight: "20vh", maxWidth: "25vw" }} src="/taskwave_nobg.png" alt="Company logo" />
                             <LoginFormBox setIsVerifiying={handleVerifyingState} setIsVerified={handleVerifiedState} isVerified={isVerified} />
                         </Col>
 
