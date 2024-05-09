@@ -41,7 +41,7 @@ const VerificationLoginModal = ({ setIsVerifiying, setIsVerified }) => {
         <div className="position-absolute px-2" id="verificationModal">
             <div className='text-center'>
                 <h2 >Insert your verification code</h2>
-                <small>feature in process</small>
+                <small>Feature in process (insert whatever)</small>
                 <div id="codeInputContainer" className='my-4' >
                     {codes.map((code, index) => (
                         <input
