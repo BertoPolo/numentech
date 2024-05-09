@@ -31,7 +31,7 @@ const Login = () => {
                     <Image className="pt-4" style={{ maxHeight: "20vh", maxWidth: "25vw" }} src="/taskwave_nobg.png" alt="Company logo" />
 
                     <div className="transparencywWhiteBox p-3 mt-4">
-                        <LoginFormBox setIsVerifiying={handleVerifyingState} setIsVerified={handleVerifiedState} isVerified={isVerified} />
+                        <LoginFormBox setIsVerifiying={handleVerifyingState} setIsVerified={handleVerifiedState} isVerifiying={isVerifiying} isVerified={isVerified} />
                     </div>
 
                 </Container>

@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useEffect } from "react"
 
 
-const FormBox = ({ setIsVerifiying, setIsVerified, isVerified }) => {
+const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified }) => {
     const [emailInput, setEmailInput] = useState("")
     const [passwordInput, setPasswordInput] = useState("")
     const [isCharging, setIsCharging] = useState(false)
@@ -62,12 +62,12 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerified }) => {
 
                     <Form.Group>
                         <div className="d-flex"><Form.Label>Email</Form.Label></div>
-                        <Form.Control type="email" placeholder="fernando23@taskwave.be" value={emailInput} onChange={(e) => setEmailInput(e.target.value)} />
+                        <Form.Control type="email" placeholder="fernando23@taskwave.be" value={emailInput} onChange={(e) => setEmailInput(e.target.value)} disabled={isVerifiying} />
                     </Form.Group>
 
                     <Form.Group>
                         <div className="d-flex"><Form.Label>Password</Form.Label></div>
-                        <Form.Control type="password" placeholder="****" value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)} />
+                        <Form.Control type="password" placeholder="****" value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)} disabled={isVerifiying} />
                     </Form.Group>
 
 
