@@ -1,7 +1,7 @@
 import React, { useState, createRef, useEffect } from 'react';
 
 
-const VerificationLoginModal = ({ setIsVerifiying, setIsVerified }) => {
+const VerificationLoginModal = ({ setIsVerifiying, setIsVerified, credentials }) => {
 
     const [codes, setCodes] = useState(Array(5).fill(''));
 
@@ -19,15 +19,35 @@ const VerificationLoginModal = ({ setIsVerifiying, setIsVerified }) => {
         }
     };
 
-    const submitCode = () => {
+    const submitCode = async () => {
         const code = codes.join('');
         console.log("Inserted code: ", code);
-        // verifying call
 
-        // if (res.ok) {
-        setIsVerifiying(false)
-        setIsVerified(true)
-        // }
+        // Aquí se debe verificar el código con el backend.
+        // Simulación de la verificación (remplaza con una llamada real):
+        const verificationSuccessful = code === "12345"; // Reemplaza con tu lógica de verificación
+
+        if (verificationSuccessful) {
+            // Llamada al backend para generar el token
+            const response = await fetch(`${process.env.REACT_APP_SERVER}users/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(credentials),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                localStorage.setItem("accessToken", data.accessToken);
+                setIsVerifiying(false);
+                setIsVerified(true);
+            } else {
+                console.error("Verification failed. Try again.");
+            }
+        } else {
+            console.error("Incorrect verification code.");
+        }
     };
 
     useEffect(() => {
@@ -41,7 +61,7 @@ const VerificationLoginModal = ({ setIsVerifiying, setIsVerified }) => {
         <div className="position-absolute px-2" id="verificationModal">
             <div className='text-center'>
                 <h2 >Insert your verification code</h2>
-                <small>Feature in process (insert whatever)</small>
+                <small>Feature in process (insert 12345)</small>
                 <div id="codeInputContainer" className='my-4' >
                     {codes.map((code, index) => (
                         <input

@@ -4,9 +4,9 @@ import { useState } from "react"
 import { useEffect } from "react"
 
 
-const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified }) => {
-    const [emailInput, setEmailInput] = useState("")
-    const [passwordInput, setPasswordInput] = useState("")
+const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, handleCredentials }) => {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
     const [isCharging, setIsCharging] = useState(false)
     const [isError, setIsError] = useState(false)
 
@@ -20,8 +20,8 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified }) =
         setIsCharging(true)
         try {
             const body = {
-                email: emailInput,
-                password: passwordInput
+                email: email,
+                password: password
             }
 
             const response = await fetch(`${process.env.REACT_APP_SERVER}users/login`, {
@@ -33,14 +33,20 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified }) =
             });
 
             if (response.ok) {
-                const data = await response.json()
-                localStorage.setItem('accessToken', data.accessToken);
-                // localStorage.setItem('selfAccount', data.email);
-                navigate("/home")
+                const data = await response.json();
+
+                if (data.isVerified === false) {
+                    handleCredentials(email, password);
+                    setIsVerifiying(true);
+                    setIsVerified(false);
+                } else {
+                    localStorage.setItem("accessToken", data.accessToken);
+                    navigate("/home");
+                }
             } else {
-                console.log("Check your credentials again")
-                setIsError(true)
-                setTimeout(() => setIsError(false), 3000)
+                console.log("Check your credentials again");
+                setIsError(true);
+                setTimeout(() => setIsError(false), 3000);
             }
 
         } catch (error) { console.log(error) }
@@ -50,8 +56,7 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified }) =
     }
 
     useEffect(() => {
-        if (isVerified) createToken()
-
+        if (isVerified) createToken(email, password);
     }, [isVerified]);
 
     return (
@@ -62,19 +67,24 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified }) =
 
                     <Form.Group>
                         <div className="d-flex"><Form.Label>Email</Form.Label></div>
-                        <Form.Control type="email" placeholder="fernando23@taskwave.be" value={emailInput} onChange={(e) => setEmailInput(e.target.value)} disabled={isVerifiying} />
+                        <Form.Control type="email" placeholder="fernando23@taskwave.be" value={email} onChange={(e) => setEmail(e.target.value)} disabled={isVerifiying} />
                     </Form.Group>
 
                     <Form.Group>
                         <div className="d-flex"><Form.Label>Password</Form.Label></div>
-                        <Form.Control type="password" placeholder="****" value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)} disabled={isVerifiying} />
+                        <Form.Control type="password" placeholder="****" value={password} onChange={(e) => setPassword(e.target.value)} disabled={isVerifiying} onKeyPress={(e) => {
+                            if (e.key === "Enter") {
+                                e.preventDefault();
+                                createToken(email, password);
+                            }
+                        }} />
                     </Form.Group>
 
 
                     <div className="d-flex justify-content-around">
                         <Button className="border-0 btnSignup" onClick={() => navigate("/register")} disabled={isCharging}>Sign up</Button>
 
-                        <Button className="border-0 buttonLogin" type="submit" disabled={!isValidEmail(emailInput) || (!passwordInput) || isCharging} >
+                        <Button className="border-0 buttonLogin" type="submit" disabled={!isValidEmail(email) || (!password) || isCharging} >
                             Login
                         </Button>
                     </div>
