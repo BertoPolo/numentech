@@ -1,16 +1,16 @@
 import { Form, Button, Spinner } from "react-bootstrap"
 import { useNavigate, Link } from "react-router-dom"
-import { useState } from "react"
-import { useEffect } from "react"
+import { useState, useEffect, useRef } from "react";
 
 
-const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, handleCredentials }) => {
+const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, handleCredentials, modalFirstInputRef }) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [isCharging, setIsCharging] = useState(false)
     const [isError, setIsError] = useState(false)
 
     const navigate = useNavigate()
+    const passwordRef = useRef(null)
 
     const isValidEmail = email => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -39,6 +39,7 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, han
                     handleCredentials(email, password);
                     setIsVerifiying(true);
                     setIsVerified(false);
+                    modalFirstInputRef.current.focus()
                 } else {
                     localStorage.setItem("accessToken", data.accessToken);
                     navigate("/home");
@@ -72,7 +73,7 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, han
 
                     <Form.Group>
                         <div className="d-flex"><Form.Label>Password</Form.Label></div>
-                        <Form.Control type="password" placeholder="****" value={password} onChange={(e) => setPassword(e.target.value)} disabled={isVerifiying} onKeyPress={(e) => {
+                        <Form.Control type="password" placeholder="****" value={password} onChange={(e) => setPassword(e.target.value)} disabled={isVerifiying} onKeyDown={(e) => {
                             if (e.key === "Enter") {
                                 e.preventDefault();
                                 createToken(email, password);

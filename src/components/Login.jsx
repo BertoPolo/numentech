@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Container, Col, Row, Image } from "react-bootstrap"
 
 import LoginFormBox from "./LoginFormBox";
@@ -9,6 +9,7 @@ const Login = () => {
     const [isVerifiying, setIsVerifiying] = useState(false)
     const [isVerified, setIsVerified] = useState(false)
     const [credentials, setCredentials] = useState({ email: "", password: "" });
+    const modalFirstInputRef = useRef(null);
 
     const handleVerifyingState = (data) => {
         setIsVerifiying(data);
@@ -36,7 +37,7 @@ const Login = () => {
                     <Image className="pt-4" style={{ maxHeight: "20vh", maxWidth: "25vw" }} src="/taskwave_nobg.png" alt="Company logo" />
 
                     <div className="transparencywWhiteBox p-3 mt-4">
-                        <LoginFormBox setIsVerifiying={handleVerifyingState} setIsVerified={handleVerifiedState} isVerifiying={isVerifiying} isVerified={isVerified} handleCredentials={handleCredentials} />
+                        <LoginFormBox setIsVerifiying={handleVerifyingState} setIsVerified={handleVerifiedState} isVerifiying={isVerifiying} isVerified={isVerified} handleCredentials={handleCredentials} modalFirstInputRef={modalFirstInputRef} />
                     </div>
 
                 </Container>
@@ -46,7 +47,7 @@ const Login = () => {
                     <Row>
                         <Col className="d-flex flex-column">
                             <Image className="mb-4 mt-3 ml-auto mr-auto" style={{ maxHeight: "20vh", maxWidth: "25vw" }} src="/taskwave_nobg.png" alt="Company logo" />
-                            <LoginFormBox setIsVerifiying={handleVerifyingState} setIsVerified={handleVerifiedState} isVerified={isVerified} handleCredentials={handleCredentials} />
+                            <LoginFormBox setIsVerifiying={handleVerifyingState} setIsVerified={handleVerifiedState} isVerified={isVerified} handleCredentials={handleCredentials} modalFirstInputRef={modalFirstInputRef} />
                         </Col>
 
                         <Col className="login-container loginBG"></Col>

@@ -1,12 +1,17 @@
-import React, { useState, createRef, useEffect } from 'react';
+import React, { useState, createRef, useEffect, useCallback } from 'react';
 
 
 const VerificationLoginModal = ({ setIsVerifiying, setIsVerified, credentials }) => {
 
     const [codes, setCodes] = useState(Array(5).fill(''));
-
     const inputRefs = Array(5).fill().map(() => createRef());
 
+    const handleKeyDown = useCallback((e) => {
+        if (e.key === "Escape") {
+            setIsVerifiying(false);
+            setIsVerified(false);
+        }
+    }, [setIsVerifiying, setIsVerified]);
 
     const handleFocusChange = (index, value) => {
         const newCodes = [...codes];
@@ -25,10 +30,9 @@ const VerificationLoginModal = ({ setIsVerifiying, setIsVerified, credentials })
 
         // Aquí se debe verificar el código con el backend.
         // Simulación de la verificación (remplaza con una llamada real):
-        const verificationSuccessful = code === "12345"; // Reemplaza con tu lógica de verificación
+        const verificationSuccessful = code === "12345";
 
         if (verificationSuccessful) {
-            // Llamada al backend para generar el token
             const response = await fetch(`${process.env.REACT_APP_SERVER}users/login`, {
                 method: "POST",
                 headers: {
@@ -49,6 +53,14 @@ const VerificationLoginModal = ({ setIsVerifiying, setIsVerified, credentials })
             console.error("Incorrect verification code.");
         }
     };
+    useEffect(() => {
+        document.addEventListener("keydown", handleKeyDown);
+        inputRefs[0].current.focus();
+
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [handleKeyDown]);
 
     useEffect(() => {
         const allCodesFilled = codes.every(code => code.trim() !== '');
