@@ -65,7 +65,7 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, han
 
     return (
         <>
-            <Form className="login-container" onSubmit={(e) => { setIsVerifiying(true); e.preventDefault(); createToken(email, password) }} style={{ opacity: isCharging ? "0.5" : "1" }}>
+            <Form className="login-container" onSubmit={(e) => { e.preventDefault(); createToken(email, password) }} style={{ opacity: isCharging ? "0.5" : "1" }}>
                 <div className="login-modal">
                     <h3 className="mb-3 d-flex">Welcome!</h3>
 

@@ -55,7 +55,7 @@ const Login = () => {
                 </Container>
             </div>
 
-            {isVerifiying && <VerificationLoginModal setIsVerifiying={handleVerifyingState} setIsVerified={handleVerifiedState} credentials={credentials} />}
+            {isVerifiying && <VerificationLoginModal setIsVerifiying={handleVerifyingState} setIsVerified={handleVerifiedState} credentials={credentials} modalFirstInputRef={modalFirstInputRef} />}
         </>
     )
 }

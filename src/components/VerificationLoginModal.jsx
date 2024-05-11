@@ -1,7 +1,7 @@
 import React, { useState, createRef, useEffect, useCallback } from 'react';
 
 
-const VerificationLoginModal = ({ setIsVerifiying, setIsVerified, credentials }) => {
+const VerificationLoginModal = ({ setIsVerifiying, setIsVerified, credentials, modalFirstInputRef }) => {
 
     const [codes, setCodes] = useState(Array(5).fill(''));
     const inputRefs = Array(5).fill().map(() => createRef());
