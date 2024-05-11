@@ -26,33 +26,25 @@ const VerificationLoginModal = ({ setIsVerifiying, setIsVerified, credentials })
 
     const submitCode = async () => {
         const code = codes.join('');
-        console.log("Inserted code: ", code);
 
-        // Aquí se debe verificar el código con el backend.
-        // Simulación de la verificación (remplaza con una llamada real):
-        const verificationSuccessful = code === "12345";
-
-        if (verificationSuccessful) {
-            const response = await fetch(`${process.env.REACT_APP_SERVER}users/login`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(credentials),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                localStorage.setItem("accessToken", data.accessToken);
-                setIsVerifiying(false);
-                setIsVerified(true);
-            } else {
-                console.error("Verification failed. Try again.");
-            }
+        const response = await fetch(`${process.env.REACT_APP_SERVER}users/verificationcode`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email: credentials.email, password: credentials.password, code: +code }),
+        });
+        if (response.ok) {
+            const data = await response.json();
+            localStorage.setItem("accessToken", data.accessToken);
+            setIsVerifiying(false);
+            setIsVerified(true);
         } else {
-            console.error("Incorrect verification code.");
+            console.error("Verification failed. Try again.");
         }
+
     };
+
     useEffect(() => {
         document.addEventListener("keydown", handleKeyDown);
         inputRefs[0].current.focus();
@@ -73,7 +65,7 @@ const VerificationLoginModal = ({ setIsVerifiying, setIsVerified, credentials })
         <div className="position-absolute px-2" id="verificationModal">
             <div className='text-center'>
                 <h2 >Insert your verification code</h2>
-                <small>Feature in process (insert 12345)</small>
+
                 <div id="codeInputContainer" className='my-4' >
                     {codes.map((code, index) => (
                         <input

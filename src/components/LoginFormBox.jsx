@@ -36,10 +36,13 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, han
                 const data = await response.json();
 
                 if (data.isVerified === false) {
+                    console.log("data: ", data)
                     handleCredentials(email, password);
                     setIsVerifiying(true);
-                    setIsVerified(false);
-                    modalFirstInputRef.current.focus()
+                    setIsVerified(false);//is it really needed? 
+                    // modalFirstInputRef.current.focus()
+                    //                 TypeError: Cannot read properties of null(reading 'focus')
+                    // at createToken(LoginFormBox.jsx: 43: 1)
                 } else {
                     localStorage.setItem("accessToken", data.accessToken);
                     navigate("/home");
@@ -62,7 +65,7 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, han
 
     return (
         <>
-            <Form className="login-container" onSubmit={(e) => { setIsVerifiying(true); e.preventDefault() }} style={{ opacity: isCharging ? "0.5" : "1" }}>
+            <Form className="login-container" onSubmit={(e) => { setIsVerifiying(true); e.preventDefault(); createToken(email, password) }} style={{ opacity: isCharging ? "0.5" : "1" }}>
                 <div className="login-modal">
                     <h3 className="mb-3 d-flex">Welcome!</h3>
 
