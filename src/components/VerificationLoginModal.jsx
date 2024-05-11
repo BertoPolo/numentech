@@ -55,6 +55,12 @@ const VerificationLoginModal = ({ setIsVerifiying, setIsVerified, credentials, m
     }, [handleKeyDown]);
 
     useEffect(() => {
+        if (modalFirstInputRef && modalFirstInputRef.current) {
+            modalFirstInputRef.current.focus();
+        }
+    }, [modalFirstInputRef]);
+
+    useEffect(() => {
         const allCodesFilled = codes.every(code => code.trim() !== '');
         if (allCodesFilled) {
             submitCode();
