@@ -41,7 +41,7 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, han
                     setIsVerified(false);//is it really needed? 
 
                 } else {
-                    localStorage.setItem("accessToken", data.accessToken);
+                    localStorage.setItem("accessToken", data);
                     navigate("/home");
                 }
             } else {

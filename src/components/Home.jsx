@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Button, Form, ListGroup, Modal } from "react-bootstrap"
 import { PencilSquare, Trash, Plus } from 'react-bootstrap-icons'
-import { getCreatedBy } from "../tools/index"
 import MyNavbar from './Navbar'
 
 const Home = () => {
@@ -17,11 +16,15 @@ const Home = () => {
 
     const getTasks = async () => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_SERVER}tasks`);
+            const response = await fetch(`${process.env.REACT_APP_SERVER}tasks`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                },
+            });
             const data = await response.json();
 
             if (data) setTasks(data);
-            else console.error("no tasks found")
+            else console.error("No tasks found")
 
         } catch (error) {
             console.log(error)
@@ -32,7 +35,6 @@ const Home = () => {
         e.preventDefault();
         const title = e.target.title.value
         const task = e.target.task.value
-        const createdBy = getCreatedBy()
 
         try {
             const response = await fetch(`${process.env.REACT_APP_SERVER}tasks`, {
@@ -41,7 +43,7 @@ const Home = () => {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
                 },
-                body: JSON.stringify({ title, task, createdBy })
+                body: JSON.stringify({ title, task })
             });
 
             if (response.ok) {
@@ -147,8 +149,8 @@ const Home = () => {
                             <div>
                                 <h5 className='font-weight-bold'>{task.title}</h5>
                                 <p>{task.task}</p>
-                                <small className='text-muted'>Created by: {task.createdBy} - {new Date(task.createdAt).toLocaleString()}</small>
-                                <small className='text-muted d-block'>Updated on: {new Date(task.updatedAt).toLocaleString()}</small>
+                                <small className='text-muted'>Created: {new Date(task.createdAt).toLocaleString()}</small>
+                                {/* <small className='text-muted d-block'>Updated: {new Date(task.updatedAt).toLocaleString()}</small> */}
                             </div>
                             {isUserRegistered &&
                                 <div className="d-flex justify-content-end">
@@ -193,7 +195,7 @@ const Home = () => {
 
                         <Modal.Footer>
                             <Button variant="secondary" onClick={() => setShowCreateModal(false)}>Close</Button>
-                            <Button variant="primary" type="submit">Creat Task</Button>
+                            <Button variant="primary" type="submit">Create Task</Button>
                         </Modal.Footer>
                     </Form>
                 </Modal>
