@@ -133,7 +133,7 @@ const Home = () => {
                     {/* <h1 id='task-list'>Task List</h1> */}
                     <span></span>
                     {isUserRegistered && (
-                        <Button className="buttonLogin border-0" onClick={() => setShowCreateModal(true)}>
+                        <Button className="btnLogin border-0" onClick={() => setShowCreateModal(true)}>
                             <Plus className="d-inline-block d-sm-none" />
                             <span className="d-none d-sm-inline">New Task</span>
                         </Button>

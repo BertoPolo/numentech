@@ -85,7 +85,7 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, han
                     <div className="d-flex justify-content-around">
                         <Button className="border-0 btnSignup" onClick={() => navigate("/register")} disabled={isCharging}>Sign up</Button>
 
-                        <Button className="border-0 buttonLogin" type="submit" disabled={!isValidEmail(email) || (!password) || isCharging} >
+                        <Button className="border-0 btnLogin" type="submit" disabled={!isValidEmail(email) || (!password) || isCharging} >
                             Login
                         </Button>
                     </div>

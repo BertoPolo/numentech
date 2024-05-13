@@ -9,28 +9,34 @@ body {
 }
 
 /* Buttons */
-.buttonLogin {
-  background: #0fbcaf !important;
+.btnLogin {
+  background: #0fbcaf;
 }
-.buttonLogin:hover {
-  background: #0fa599 !important;
+.btnLogin:hover {
+  background: #0fa599;
 }
-.buttonLogin:disabled {
-  background: #87d4ce !important;
+.btnLogin:disabled {
+  background: #87d4ce;
+}
+.btnLogin:focus {
+  background: #90bfbb;
 }
 
 .btnSignup {
-  background: #fcae1e !important;
+  background: #fcae1e;
 }
 .btnSignup:hover {
-  background: #ce8d15 !important;
+  background: #ce8d15;
+}
+.btnSignup:focus {
+  background: #ddc087;
 }
 
 .btnBack {
-  background: #e84343 !important;
+  background: #e84343;
 }
 .btnBack:hover {
-  background: #c63b3b !important;
+  background: #c63b3b;
 }
 /*  */
 

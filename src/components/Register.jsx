@@ -74,7 +74,7 @@ const CreateUser = () => {
 
                     <div className="mt-4">
 
-                        <Button className="buttonLogin border-0" type="submit" ref={registerBtnRef} disabled={!isValidEmail(emailInput) || (!passwordInput)}>
+                        <Button className="btnLogin border-0" type="submit" ref={registerBtnRef} disabled={!isValidEmail(emailInput) || (!passwordInput)}>
                             Register
                         </Button>
 
