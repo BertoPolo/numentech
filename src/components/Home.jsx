@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Button, Form, ListGroup, Modal } from "react-bootstrap"
+import { Container, Button, Form, ListGroup, Modal, Spinner } from "react-bootstrap"
 import { PencilSquare, Trash, Plus } from 'react-bootstrap-icons'
 import MyNavbar from './Navbar'
 
@@ -10,11 +10,14 @@ const Home = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
     const [showCreateModal, setShowCreateModal] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
 
     // Array of bg colors for tasks
     const bgColors = ['bg-color-1', 'bg-color-2', 'bg-color-3', 'bg-color-4', 'bg-color-5'];
 
     const getTasks = async () => {
+        setIsLoading(true)
         try {
             const response = await fetch(`${process.env.REACT_APP_SERVER}tasks`, {
                 headers: {
@@ -28,6 +31,8 @@ const Home = () => {
 
         } catch (error) {
             console.log(error)
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -129,9 +134,7 @@ const Home = () => {
             <MyNavbar />
 
             <Container className='mb-4 ' id='task-list'>
-                <div className="d-flex justify-content-between align-items-center my-4">
-                    {/* <h1 id='task-list'>Task List</h1> */}
-                    <span></span>
+                <div className="d-flex justify-content-end align-items-center my-4">
                     {isUserRegistered && (
                         <Button className="btnLogin border-0" onClick={() => setShowCreateModal(true)}>
                             <Plus className="d-inline-block d-sm-none" />
@@ -139,27 +142,36 @@ const Home = () => {
                         </Button>
                     )}
                 </div>
-                {/* map all the fetched tasks */}
+
                 <ListGroup>
-                    {tasks && tasks.map((task, index) => (
-                        <ListGroup.Item
-                            key={task._id}
-                            className={`border-0 rounded d-flex flex-column justify-content-between mb-2 ${bgColors[index % bgColors.length]}`}
-                        >
-                            <div>
-                                <h5 className='font-weight-bold'>{task.title}</h5>
-                                <p>{task.task}</p>
-                                <small className='text-muted'>Created: {new Date(task.createdAt).toLocaleString()}</small>
-                                {/* <small className='text-muted d-block'>Updated: {new Date(task.updatedAt).toLocaleString()}</small> */}
+                    {
+                        isLoading ? (
+                            <div className="d-flex justify-content-center">
+                                <Spinner animation="border" variant="success">
+                                    <span className="sr-only">Loading...</span>
+                                </Spinner>
                             </div>
-                            {isUserRegistered &&
-                                <div className="d-flex justify-content-end">
-                                    <PencilSquare onClick={() => handleEditClick(task)} className="pointer mx-2" style={{ width: "1.2rem", height: "1.2rem" }} />
-                                    <Trash onClick={() => handleDeleteClick(task)} className="pointer text-danger" style={{ width: "1.2rem", height: "1.2rem" }} />
-                                </div>
-                            }
-                        </ListGroup.Item>
-                    ))}
+                        ) : (
+
+                            tasks.map((task, index) => (
+                                <ListGroup.Item
+                                    key={task._id}
+                                    className={`border-0 rounded d-flex flex-column justify-content-between mb-2 ${bgColors[index % bgColors.length]}`}
+                                >
+                                    <div>
+                                        <h5 className='font-weight-bold'>{task.title}</h5>
+                                        <p>{task.task}</p>
+                                        <small className='text-muted'>Created: {new Date(task.createdAt).toLocaleString()}</small>
+                                        {/* <small className='text-muted d-block'>Updated: {new Date(task.updatedAt).toLocaleString()}</small> */}
+                                    </div>
+                                    {isUserRegistered &&
+                                        <div className="d-flex justify-content-end">
+                                            <PencilSquare onClick={() => handleEditClick(task)} className="pointer mx-2" style={{ width: "1.2rem", height: "1.2rem" }} />
+                                            <Trash onClick={() => handleDeleteClick(task)} className="pointer text-danger" style={{ width: "1.2rem", height: "1.2rem" }} />
+                                        </div>
+                                    }
+                                </ListGroup.Item>
+                            )))}
                 </ListGroup>
 
                 {/* MODALS */}

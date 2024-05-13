@@ -6,18 +6,18 @@ import { useState, useEffect, useRef } from "react";
 const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, handleCredentials, modalFirstInputRef }) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [isCharging, setIsCharging] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
 
     const navigate = useNavigate()
-    const passwordRef = useRef(null)
+    // const passwordRef = useRef(null)
 
     const isValidEmail = email => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
 
     const createToken = async () => {
-        setIsCharging(true)
+        setIsLoading(true)
         try {
             const body = {
                 email: email,
@@ -52,7 +52,7 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, han
 
         } catch (error) { console.log(error) }
         finally {
-            setIsCharging(false)
+            setIsLoading(false)
         }
     }
 
@@ -62,7 +62,7 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, han
 
     return (
         <>
-            <Form className="login-container" onSubmit={(e) => { e.preventDefault(); createToken(email, password) }} style={{ opacity: isCharging ? "0.5" : "1" }}>
+            <Form className="login-container" onSubmit={(e) => { e.preventDefault(); createToken(email, password) }} style={{ opacity: isLoading ? "0.5" : "1" }}>
                 <div className="login-modal">
                     <h3 className="mb-3 d-flex">Welcome!</h3>
 
@@ -83,9 +83,9 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, han
 
 
                     <div className="d-flex justify-content-around">
-                        <Button className="border-0 btnSignup" onClick={() => navigate("/register")} disabled={isCharging}>Sign up</Button>
+                        <Button className="border-0 btnSignup" onClick={() => navigate("/register")} disabled={isLoading}>Sign up</Button>
 
-                        <Button className="border-0 btnLogin" type="submit" disabled={!isValidEmail(email) || (!password) || isCharging} >
+                        <Button className="border-0 btnLogin" type="submit" disabled={!isValidEmail(email) || (!password) || isLoading} >
                             Login
                         </Button>
                     </div>
@@ -94,7 +94,7 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, han
 
                     {/* <small className="text-muted text-center login-small-font d-block mt-3">© 2024 ALL RIGHTS RESERVED</small> */}
                 </div >
-                {isCharging && <Spinner className="position-absolute" animation="border" variant="success" />}
+                {isLoading && <Spinner className="position-absolute" animation="border" variant="success" />}
                 {isError && <Spinner className="position-absolute" animation="grow" variant="danger" />}
 
             </Form >

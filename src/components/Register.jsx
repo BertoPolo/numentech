@@ -64,11 +64,11 @@ const CreateUser = () => {
         <div className="d-flex justify-content-center align-items-center registerBg" style={{ minHeight: "100vh" }}>
             <div className="login-container text-center transparencywWhiteBox p-3">
 
-                <Form className="p-4" onSubmit={(e) => handleSubmit(e)} style={{ opacity: isCharging ? "0.5" : "1" }}>
+                <Form className="p-5" onSubmit={(e) => handleSubmit(e)} style={{ opacity: isCharging ? "0.5" : "1" }}>
                     <h4 className="mb-3">Sign Up</h4>
 
                     <Form.Group>
-                        <Form.Control className="mb-2" type="email" placeholder="Email" onChange={(e) => setEmailInput(e.target.value)} />
+                        <Form.Control className="mb-2" type="email" placeholder="Real email" onChange={(e) => setEmailInput(e.target.value)} />
                         <Form.Control type="password" placeholder="Password" onChange={(e) => setPasswordInput(e.target.value)} />
                     </Form.Group>
 
