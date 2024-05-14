@@ -1,6 +1,6 @@
 import { Form, Button, Spinner } from "react-bootstrap"
 import { useNavigate, Link } from "react-router-dom"
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 
 const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, handleCredentials, modalFirstInputRef }) => {

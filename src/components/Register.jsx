@@ -12,9 +12,9 @@ const Register = () => {
     const registerBtnRef = useRef()
     const backBtnRef = useRef()
 
-    const [showModal, setShowModal] = useState(false);
+    const [isError, setIsError] = useState(true);
 
-    const toggleShowModal = () => setShowModal(!showModal);
+    const toggleIsError = () => setIsError(!isError);
 
 
 
@@ -56,10 +56,10 @@ const Register = () => {
                 navigate("/")
             } else {
                 console.log("User already exists")
-                setShowModal(true)
+                setIsError(true)
                 ableBtn()
                 setIsCharging(false)
-                setTimeout(() => setShowModal(false), 3000)
+                setTimeout(() => setIsError(false), 3000)
             }
 
         } catch (error) {
@@ -95,26 +95,10 @@ const Register = () => {
                         </div>
                     </Form >
                     {isCharging && <Spinner animation="border" variant="success" className="position-absolute" />}
+                    {isError && <p className="text-danger">Oops! This email is already in use</p>}
+
                 </div>
-                <Row>
-                    <Col xs={12}>
-                        <Toast show={showModal} onClose={toggleShowModal}>
-                            <Toast.Header>
-                                {/* <img
-                                    src="holder.js/20x20?text=%20"
-                                    className="rounded me-2"
-                                    alt=""
-                                /> */}
-                                <strong className="m-auto">Ooops!</strong>
-                                {/* <small>11 mins ago</small> */}
-                            </Toast.Header>
-                            <Toast.Body>This email is already in use</Toast.Body>
-                        </Toast>
-                    </Col>
-                </Row>
             </div>
-
-
         </>
 
     )
