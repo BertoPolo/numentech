@@ -37,7 +37,7 @@ const Login = () => {
                     <Image className="pt-4" style={{ maxHeight: "20vh", maxWidth: "25vw" }} src="/taskwave_nobg.png" alt="Company logo" />
 
                     <div className="transparencywWhiteBox p-3 mt-4">
-                        <LoginFormBox setIsVerifiying={handleVerifyingState} setIsVerified={handleVerifiedState} isVerifiying={isVerifiying} isVerified={isVerified} handleCredentials={handleCredentials} modalFirstInputRef={modalFirstInputRef} />
+                        <LoginFormBox setIsVerifiying={handleVerifyingState} setIsVerified={handleVerifiedState} isVerifiying={isVerifiying} isVerified={isVerified} handleCredentials={handleCredentials} />
                     </div>
 
                 </Container>
@@ -47,7 +47,7 @@ const Login = () => {
                     <Row>
                         <Col className="d-flex flex-column justify-content-center">
                             <Image className="mb-4 ml-auto mr-auto" style={{ maxHeight: "20vh", maxWidth: "25vw" }} src="/taskwave_nobg.png" alt="Company logo" />
-                            <LoginFormBox setIsVerifiying={handleVerifyingState} setIsVerified={handleVerifiedState} isVerified={isVerified} handleCredentials={handleCredentials} modalFirstInputRef={modalFirstInputRef} />
+                            <LoginFormBox setIsVerifiying={handleVerifyingState} setIsVerified={handleVerifiedState} isVerified={isVerified} handleCredentials={handleCredentials} />
                         </Col>
 
                         <Col className="login-container loginBG"></Col>

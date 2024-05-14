@@ -3,14 +3,13 @@ import { useNavigate, Link } from "react-router-dom"
 import { useState, useEffect } from "react";
 
 
-const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, handleCredentials, modalFirstInputRef }) => {
+const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, handleCredentials }) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
 
     const navigate = useNavigate()
-    // const passwordRef = useRef(null)
 
     const isValidEmail = email => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
