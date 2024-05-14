@@ -2,6 +2,7 @@ import React from 'react'
 import { Navbar, Nav, Button, Container, Image } from 'react-bootstrap';
 import { BoxArrowRight, PersonFill } from 'react-bootstrap-icons';
 import { useNavigate } from "react-router-dom"
+import CustomTasksColor from './CustomTasksColor';
 
 const MyNavbar = () => {
     const navigate = useNavigate();
