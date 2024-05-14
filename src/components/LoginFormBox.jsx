@@ -32,7 +32,7 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, han
                 body: JSON.stringify(body),
             });
 
-            if (response.ok) {
+            if (response !== 201) {
                 const data = await response.json();
 
                 if (data.isVerified === false) {

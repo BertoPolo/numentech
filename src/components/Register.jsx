@@ -94,9 +94,9 @@ const Register = () => {
                             </Link>
                         </div>
                     </Form >
+
                     {isCharging && <Spinner animation="border" variant="success" className="position-absolute" />}
                     {isError && <p className="text-danger">Oops! This email is already in use</p>}
-
                 </div>
             </div>
         </>

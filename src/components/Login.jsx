@@ -45,8 +45,8 @@ const Login = () => {
                 {/* SINCE small screens */}
                 <Container fluid className="d-none d-sm-block">
                     <Row>
-                        <Col className="d-flex flex-column">
-                            <Image className="mb-4 mt-3 ml-auto mr-auto" style={{ maxHeight: "20vh", maxWidth: "25vw" }} src="/taskwave_nobg.png" alt="Company logo" />
+                        <Col className="d-flex flex-column justify-content-center">
+                            <Image className="mb-4 ml-auto mr-auto" style={{ maxHeight: "20vh", maxWidth: "25vw" }} src="/taskwave_nobg.png" alt="Company logo" />
                             <LoginFormBox setIsVerifiying={handleVerifyingState} setIsVerified={handleVerifiedState} isVerified={isVerified} handleCredentials={handleCredentials} modalFirstInputRef={modalFirstInputRef} />
                         </Col>
 
