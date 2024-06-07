@@ -144,34 +144,44 @@ const Home = () => {
                 </div>
 
                 <ListGroup>
-                    {
-                        isLoading ? (
-                            <div className="d-flex justify-content-center">
-                                <Spinner animation="border" variant="success">
-                                    <span className="sr-only">Loading...</span>
-                                </Spinner>
-                            </div>
-                        ) : (
-
-                            tasks.map((task, index) => (
-                                <ListGroup.Item
-                                    key={task._id}
-                                    className={`border-0 rounded d-flex flex-column justify-content-between mb-2 ${bgColors[index % bgColors.length]}`}
-                                >
-                                    <div>
-                                        <h5 className='font-weight-bold'>{task.title}</h5>
-                                        <p>{task.task}</p>
-                                        <small className='text-muted'>Created: {new Date(task.createdAt).toLocaleString()}</small>
-                                        {/* <small className='text-muted d-block'>Updated: {new Date(task.updatedAt).toLocaleString()}</small> */}
-                                    </div>
-                                    {isUserRegistered &&
-                                        <div className="d-flex justify-content-end">
-                                            <PencilSquare onClick={() => handleEditClick(task)} className="pointer mx-2" style={{ width: "1.2rem", height: "1.2rem" }} />
-                                            <Trash onClick={() => handleDeleteClick(task)} className="pointer text-danger" style={{ width: "1.2rem", height: "1.2rem" }} />
-                                        </div>
-                                    }
-                                </ListGroup.Item>
-                            )))}
+                    {isLoading ? (
+                        <div className="d-flex justify-content-center">
+                            <Spinner animation="border" variant="success">
+                                <span className="sr-only">Loading...</span>
+                            </Spinner>
+                        </div>
+                    ) : tasks.length > 0 ? (
+                        tasks.map((task, index) => (
+                            <ListGroup.Item
+                                key={task._id}
+                                className={`border-0 rounded d-flex flex-column justify-content-between mb-2 ${bgColors[index % bgColors.length]}`}
+                            >
+                                <div>
+                                    <h5 className="font-weight-bold">{task.title}</h5>
+                                    <p>{task.task}</p>
+                                    <small className="text-muted">Created: {new Date(task.createdAt).toLocaleString()}</small>
+                                </div>
+                                {/* {isUserRegistered && ( */}
+                                <div className="d-flex justify-content-end">
+                                    <PencilSquare
+                                        onClick={() => handleEditClick(task)}
+                                        className="pointer mx-2"
+                                        style={{ width: '1.2rem', height: '1.2rem' }}
+                                    />
+                                    <Trash
+                                        onClick={() => handleDeleteClick(task)}
+                                        className="pointer text-danger"
+                                        style={{ width: '1.2rem', height: '1.2rem' }}
+                                    />
+                                </div>
+                                {/* )} */}
+                            </ListGroup.Item>
+                        ))
+                    ) : (
+                        <div className="text-center mt-3">
+                            <p>No tasks saved</p>
+                        </div>
+                    )}
                 </ListGroup>
 
                 {/* MODALS */}

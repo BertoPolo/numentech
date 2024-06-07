@@ -36,7 +36,7 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, han
 
                 if (data.isVerified === false) {
                     handleCredentials(email, password);
-                    setIsVerifiying(true);
+                    setIsVerifiying(true); //trigger
                     setIsVerified(false);//is it really needed? 
 
                 } else {
@@ -89,7 +89,7 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, han
                         </Button>
                     </div>
 
-                    <Link className="mt-4 d-block text-center" to="/home"><small>I don't have an account</small></Link>
+                    {/* <Link className="mt-4 d-block text-center" to="/home"><small>I don't have an account</small></Link> */}
 
                     {/* <small className="text-muted text-center login-small-font d-block mt-3">© 2024 ALL RIGHTS RESERVED</small> */}
                 </div >
