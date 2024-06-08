@@ -12,7 +12,7 @@ const Register = () => {
     const registerBtnRef = useRef()
     const backBtnRef = useRef()
 
-    const [isError, setIsError] = useState(true);
+    const [isError, setIsError] = useState(false);
 
     const toggleIsError = () => setIsError(!isError);
 
