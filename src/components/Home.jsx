@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Button, Form, ListGroup, Modal, Spinner } from "react-bootstrap"
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { PencilSquare, Trash, Plus } from 'react-bootstrap-icons'
 import MyNavbar from './Navbar'
 import FolderCard from './FolderCard'
@@ -11,6 +12,7 @@ const Home = () => {
     const [selectedTask, setSelectedTask] = useState(null);
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [isDragDrop, setIsDragDrop] = useState(false);
 
 
     // Array of bg colors for tasks
@@ -128,21 +130,85 @@ const Home = () => {
         getTasks()
     }, [])
 
+    const onDragEnd = (result) => {
+        if (!result.destination) {
+            return;
+        }
+
+        const reorderedTasks = Array.from(tasks);
+        const [removed] = reorderedTasks.splice(result.source.index, 1);
+        reorderedTasks.splice(result.destination.index, 0, removed);
+
+        setTasks(reorderedTasks);
+    };
 
     return (
         <>
             <MyNavbar />
 
             <Container className='mb-4 ' id='task-list'>
-                <div className="d-flex justify-content-between align-items-center my-4">
-                    <FolderCard />
+                <div className={`d-flex align-items-center my-4 ${isDragDrop ? "justify-content-between" : "justify-content-end"}`}>
+                    {isDragDrop && <FolderCard />}
                     <Button className="btnLogin border-0" onClick={() => setShowCreateModal(true)}>
                         <Plus className="d-inline-block d-sm-none" />
                         <span className="d-none d-sm-inline">New Task</span>
                     </Button>
                 </div>
 
-                <ListGroup>
+
+                <DragDropContext onDragEnd={onDragEnd}>
+                    <Droppable droppableId="droppable-tasks">
+                        {(provided) => (
+                            <ListGroup {...provided.droppableProps} ref={provided.innerRef}>
+                                {isLoading ? (
+                                    <div className="d-flex justify-content-center">
+                                        <Spinner animation="border" variant="success">
+                                            <span className="sr-only">Loading...</span>
+                                        </Spinner>
+                                    </div>
+                                ) : tasks.length > 0 ? (
+                                    tasks.map((task, index) => (
+                                        <Draggable key={task._id} draggableId={task._id} index={index}>
+                                            {(provided) => (
+                                                <ListGroup.Item
+                                                    ref={provided.innerRef}
+                                                    {...provided.draggableProps}
+                                                    {...provided.dragHandleProps}
+                                                    className={`border-0 rounded d-flex flex-column justify-content-between mb-2 ${bgColors[index % bgColors.length]}`}
+                                                >
+                                                    <div>
+                                                        <h5 className="font-weight-bold">{task.title}</h5>
+                                                        <p>{task.task}</p>
+                                                        <small className="text-muted">Created: {new Date(task.createdAt).toLocaleString()}</small>
+                                                    </div>
+                                                    <div className="d-flex justify-content-end">
+                                                        <PencilSquare
+                                                            onClick={() => handleEditClick(task)}
+                                                            className="pointer mx-2"
+                                                            style={{ width: '1.2rem', height: '1.2rem' }}
+                                                        />
+                                                        <Trash
+                                                            onClick={() => handleDeleteClick(task)}
+                                                            className="pointer text-danger"
+                                                            style={{ width: '1.2rem', height: '1.2rem' }}
+                                                        />
+                                                    </div>
+                                                </ListGroup.Item>
+                                            )}
+                                        </Draggable>
+                                    ))
+                                ) : (
+                                    <div className="text-center mt-3">
+                                        <p>No tasks saved</p>
+                                    </div>
+                                )}
+                                {provided.placeholder}
+                            </ListGroup>
+                        )}
+                    </Droppable>
+                </DragDropContext>
+
+                {/* <ListGroup>
                     {isLoading ? (
                         <div className="d-flex justify-content-center">
                             <Spinner animation="border" variant="success">
@@ -160,7 +226,6 @@ const Home = () => {
                                     <p>{task.task}</p>
                                     <small className="text-muted">Created: {new Date(task.createdAt).toLocaleString()}</small>
                                 </div>
-                                {/* {isUserRegistered && ( */}
                                 <div className="d-flex justify-content-end">
                                     <PencilSquare
                                         onClick={() => handleEditClick(task)}
@@ -173,7 +238,6 @@ const Home = () => {
                                         style={{ width: '1.2rem', height: '1.2rem' }}
                                     />
                                 </div>
-                                {/* )} */}
                             </ListGroup.Item>
                         ))
                     ) : (
@@ -181,7 +245,7 @@ const Home = () => {
                             <p>No tasks saved</p>
                         </div>
                     )}
-                </ListGroup>
+                </ListGroup> */}
 
                 {/* MODALS */}
 
