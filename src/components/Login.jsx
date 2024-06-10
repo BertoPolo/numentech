@@ -3,6 +3,8 @@ import { Container, Col, Row, Image } from "react-bootstrap"
 
 import LoginFormBox from "./LoginFormBox";
 import VerificationLoginModal from "./VerificationLoginModal"
+import { useAuth } from '../tools/authContext';
+
 
 
 const Login = () => {
@@ -10,6 +12,7 @@ const Login = () => {
     const [isVerified, setIsVerified] = useState(false)
     const [credentials, setCredentials] = useState({ email: "", password: "" });
     const modalFirstInputRef = useRef(null);
+    const { logout } = useAuth();
 
     const handleVerifyingState = (data) => {
         setIsVerifiying(data);
@@ -24,6 +27,7 @@ const Login = () => {
     };
 
     useEffect(() => {
+        logout()
         //Remove token always, even if you navigate back
         localStorage.removeItem('accessToken');
     }, [])

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Container, Button, Form, ListGroup, Modal, Spinner } from "react-bootstrap"
 import { PencilSquare, Trash, Plus } from 'react-bootstrap-icons'
 import MyNavbar from './Navbar'
+import FolderCard from './FolderCard'
 
 const Home = () => {
-    const isUserRegistered = localStorage.getItem('accessToken')
     const [tasks, setTasks] = useState([])
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -134,13 +134,12 @@ const Home = () => {
             <MyNavbar />
 
             <Container className='mb-4 ' id='task-list'>
-                <div className="d-flex justify-content-end align-items-center my-4">
-                    {isUserRegistered && (
-                        <Button className="btnLogin border-0" onClick={() => setShowCreateModal(true)}>
-                            <Plus className="d-inline-block d-sm-none" />
-                            <span className="d-none d-sm-inline">New Task</span>
-                        </Button>
-                    )}
+                <div className="d-flex justify-content-between align-items-center my-4">
+                    <FolderCard />
+                    <Button className="btnLogin border-0" onClick={() => setShowCreateModal(true)}>
+                        <Plus className="d-inline-block d-sm-none" />
+                        <span className="d-none d-sm-inline">New Task</span>
+                    </Button>
                 </div>
 
                 <ListGroup>

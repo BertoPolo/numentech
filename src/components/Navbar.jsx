@@ -3,12 +3,16 @@ import { Navbar, Nav, Button, Container, Image } from 'react-bootstrap';
 import { BoxArrowRight, PersonFill } from 'react-bootstrap-icons';
 import { useNavigate } from "react-router-dom"
 import CustomTasksColor from './CustomTasksColor';
+import { useAuth } from '../tools/authContext';
+
 
 const MyNavbar = () => {
     const navigate = useNavigate();
+    const { logout } = useAuth();
     const isUserLoggedIn = localStorage.getItem('accessToken');
 
     const handleLogout = () => {
+        logout()
         localStorage.removeItem('accessToken');
         navigate("/");
     };
