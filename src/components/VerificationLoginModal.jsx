@@ -1,10 +1,11 @@
 import React, { useState, createRef, useEffect, useCallback } from 'react';
-
+import { useAuth } from '../tools/authContext';
 
 const VerificationLoginModal = ({ setIsVerifiying, setIsVerified, credentials, modalFirstInputRef }) => {
 
     const [codes, setCodes] = useState(Array(5).fill(''));
     const inputRefs = Array(5).fill().map(() => createRef());
+    const { login } = useAuth();
 
     const handleKeyDown = useCallback((e) => {
         if (e.key === "Escape") {
@@ -36,6 +37,7 @@ const VerificationLoginModal = ({ setIsVerifiying, setIsVerified, credentials, m
         });
         if (response.ok) {
             const data = await response.json();
+            login()
             localStorage.setItem("accessToken", data.accessToken);
             setIsVerifiying(false);
             setIsVerified(true);

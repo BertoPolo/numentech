@@ -1,4 +1,4 @@
-import { Form, Button, Spinner, Toast, Row, Col, ToastContainer } from "react-bootstrap"
+import { Form, Button, Spinner } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
 import { useState, useRef } from "react"
 
@@ -15,8 +15,6 @@ const Register = () => {
     const [isError, setIsError] = useState(false);
 
     const toggleIsError = () => setIsError(!isError);
-
-
 
     const isValidEmail = email => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);

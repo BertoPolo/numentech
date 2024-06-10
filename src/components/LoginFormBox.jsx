@@ -1,6 +1,8 @@
 import { Form, Button, Spinner } from "react-bootstrap"
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react";
+import { useAuth } from '../tools/authContext';
+
 
 
 const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, handleCredentials }) => {
@@ -10,6 +12,7 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, han
     const [isError, setIsError] = useState(false)
 
     const navigate = useNavigate()
+    const { login } = useAuth();
 
     const isValidEmail = email => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -40,6 +43,7 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, han
                     setIsVerified(false);//is it really needed? 
 
                 } else {
+                    login()
                     localStorage.setItem("accessToken", data.accessToken);
                     navigate("/home");
                 }
