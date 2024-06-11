@@ -14,6 +14,7 @@ const Home = () => {
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [isDragDrop, setIsDragDrop] = useState(true);
+    const [randomNum, setRandomNum] = useState("1");
 
 
     // Array of bg colors for tasks
@@ -31,7 +32,6 @@ const Home = () => {
 
             if (data) {
                 setTasks(data);
-                folders = [...new Set(tasks.map(task => task.folder))]
             }
             else console.error("No tasks found")
 
@@ -135,15 +135,17 @@ const Home = () => {
     useEffect(() => {
         getTasks()
     }, [])
+
     useEffect(() => {
         if (tasks.length > 0) {
             const uniqueFolders = [...new Set(tasks.map(task => task.folder))];
             setFolders(uniqueFolders);
         }
+        setRandomNum(Math.floor(Math.random() * 4).toString())
     }, [tasks]);
 
     const onDragStart = () => {
-        setIsDragDrop(true);
+        // setIsDragDrop(true);
     };
 
     const onDragEnd = async (result) => {
@@ -186,12 +188,12 @@ const Home = () => {
         <>
             <MyNavbar />
 
-            <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
-                <Container className='mb-4 ' id='task-list'>
-                    <div className={`d-flex align-items-center my-4 ${isDragDrop ? "justify-content-between" : "justify-content-end"}`}>
+            <DragDropContext onDragEnd={onDragEnd}>
+                <Container className='mb-4' id='task-list'>
+                    <div className='d-flex align-items-center my-4 justify-content-between'>
                         <div className='d-flex'>
-                            {isDragDrop && folders.map((folder, index) => (
-                                <Droppable key={index} droppableId={`folder-${folder}`}>
+                            {folders.map((folder, index) => (
+                                <Droppable key={`folder-${folder}`} droppableId={`folder-${folder}`}>
                                     {(provided) => (
                                         <div ref={provided.innerRef} {...provided.droppableProps} className="d-flex">
                                             <div className="mr-2 bg-success p-2">{folder}</div>
@@ -207,7 +209,7 @@ const Home = () => {
                         </Button>
                     </div>
 
-                    <Droppable droppableId="droppable-tasks">
+                    <Droppable droppableId={randomNum}>
                         {(provided) => (
                             <ListGroup {...provided.droppableProps} ref={provided.innerRef}>
                                 {isLoading ? (
