@@ -3,16 +3,17 @@ import { Container, Button, Form, ListGroup, Modal, Spinner } from "react-bootst
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { PencilSquare, Trash, Plus } from 'react-bootstrap-icons'
 import MyNavbar from './Navbar'
-import FolderCard from './FolderCard'
 
 const Home = () => {
     const [tasks, setTasks] = useState([])
+    const [folders, setFolders] = useState([]);
+
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [isDragDrop, setIsDragDrop] = useState(false);
+    const [isDragDrop, setIsDragDrop] = useState(true);
 
 
     // Array of bg colors for tasks
@@ -28,7 +29,10 @@ const Home = () => {
             });
             const data = await response.json();
 
-            if (data) setTasks(data);
+            if (data) {
+                setTasks(data);
+                folders = [...new Set(tasks.map(task => task.folder))]
+            }
             else console.error("No tasks found")
 
         } catch (error) {
@@ -42,6 +46,7 @@ const Home = () => {
         e.preventDefault();
         const title = e.target.title.value
         const task = e.target.task.value
+        // const folder = e.target.task.value
 
         try {
             const response = await fetch(`${process.env.REACT_APP_SERVER}tasks`, {
@@ -67,6 +72,7 @@ const Home = () => {
         e.preventDefault();
         const title = e.target.title.value
         const task = e.target.task.value
+        // const folder = e.target.task.value
 
         try {
             const response = await fetch(`${process.env.REACT_APP_SERVER}tasks/${selectedTask._id}`, {
@@ -118,7 +124,7 @@ const Home = () => {
         setShowDeleteModal(true);
     };
 
-    const handleClickScroll = () => {
+    const handleClickScrollToTop = () => {
         const element = document.getElementById('task-list');
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
@@ -129,34 +135,78 @@ const Home = () => {
     useEffect(() => {
         getTasks()
     }, [])
+    useEffect(() => {
+        if (tasks.length > 0) {
+            const uniqueFolders = [...new Set(tasks.map(task => task.folder))];
+            setFolders(uniqueFolders);
+        }
+    }, [tasks]);
 
-    const onDragEnd = (result) => {
+    const onDragStart = () => {
+        setIsDragDrop(true);
+    };
+
+    const onDragEnd = async (result) => {
+        setIsDragDrop(false);
         if (!result.destination) {
             return;
         }
 
-        const reorderedTasks = Array.from(tasks);
-        const [removed] = reorderedTasks.splice(result.source.index, 1);
-        reorderedTasks.splice(result.destination.index, 0, removed);
+        const { source, destination } = result;
 
-        setTasks(reorderedTasks);
+        if (destination.droppableId.startsWith("folder-")) {
+            const folderName = destination.droppableId.split("folder-")[1];
+            const updatedTask = { ...tasks[source.index], folder: folderName };
+
+            try {
+                const response = await fetch(`${process.env.REACT_APP_SERVER}tasks/${updatedTask._id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                    },
+                    body: JSON.stringify(updatedTask)
+                });
+
+                if (response.ok) {
+                    getTasks();
+                }
+            } catch (error) {
+                console.error('Error al mover la tarea:', error);
+            }
+        } else {
+            const reorderedTasks = Array.from(tasks);
+            const [removed] = reorderedTasks.splice(source.index, 1);
+            reorderedTasks.splice(destination.index, 0, removed);
+            setTasks(reorderedTasks);
+        }
     };
 
     return (
         <>
             <MyNavbar />
 
-            <Container className='mb-4 ' id='task-list'>
-                <div className={`d-flex align-items-center my-4 ${isDragDrop ? "justify-content-between" : "justify-content-end"}`}>
-                    {isDragDrop && <FolderCard />}
-                    <Button className="btnLogin border-0" onClick={() => setShowCreateModal(true)}>
-                        <Plus className="d-inline-block d-sm-none" />
-                        <span className="d-none d-sm-inline">New Task</span>
-                    </Button>
-                </div>
+            <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
+                <Container className='mb-4 ' id='task-list'>
+                    <div className={`d-flex align-items-center my-4 ${isDragDrop ? "justify-content-between" : "justify-content-end"}`}>
+                        <div className='d-flex'>
+                            {isDragDrop && folders.map((folder, index) => (
+                                <Droppable key={index} droppableId={`folder-${folder}`}>
+                                    {(provided) => (
+                                        <div ref={provided.innerRef} {...provided.droppableProps} className="d-flex">
+                                            <div className="mr-2 bg-success p-2">{folder}</div>
+                                            {provided.placeholder}
+                                        </div>
+                                    )}
+                                </Droppable>
+                            ))}
+                        </div>
+                        <Button className="btnLogin border-0" onClick={() => setShowCreateModal(true)}>
+                            <Plus className="d-inline-block d-sm-none" />
+                            <span className="d-none d-sm-inline">New Task</span>
+                        </Button>
+                    </div>
 
-
-                <DragDropContext onDragEnd={onDragEnd}>
                     <Droppable droppableId="droppable-tasks">
                         {(provided) => (
                             <ListGroup {...provided.droppableProps} ref={provided.innerRef}>
@@ -206,9 +256,8 @@ const Home = () => {
                             </ListGroup>
                         )}
                     </Droppable>
-                </DragDropContext>
 
-                {/* <ListGroup>
+                    {/* <ListGroup>
                     {isLoading ? (
                         <div className="d-flex justify-content-center">
                             <Spinner animation="border" variant="success">
@@ -247,100 +296,102 @@ const Home = () => {
                     )}
                 </ListGroup> */}
 
-                {/* MODALS */}
+                    {/* MODALS */}
 
-                {/* Create Task */}
-                <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Create New Task</Modal.Title>
-                    </Modal.Header>
-                    <Form onSubmit={(e) => createNewTask(e)}>
-                        <Modal.Body>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Title</Form.Label>
-                                <Form.Control
-                                    name="title"
-                                    type="text"
-                                    placeholder="Título"
-                                    required maxLength="20"
-                                />
-                            </Form.Group>
+                    {/* Create Task */}
+                    <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Create New Task</Modal.Title>
+                        </Modal.Header>
+                        <Form onSubmit={(e) => createNewTask(e)}>
+                            <Modal.Body>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Title</Form.Label>
+                                    <Form.Control
+                                        name="title"
+                                        type="text"
+                                        placeholder="Título"
+                                        required maxLength="20"
+                                    />
+                                </Form.Group>
 
-                            <Form.Group className="mb-3">
-                                <Form.Label>Task Description</Form.Label>
-                                <Form.Control
-                                    name="task"
-                                    as="textarea"
-                                    rows={3}
-                                    placeholder="Descripción de la tarea"
-                                    required maxLength="150"
-                                />
-                            </Form.Group>
-                        </Modal.Body>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Task Description</Form.Label>
+                                    <Form.Control
+                                        name="task"
+                                        as="textarea"
+                                        rows={3}
+                                        placeholder="Descripción de la tarea"
+                                        required maxLength="150"
+                                    />
+                                </Form.Group>
+                            </Modal.Body>
+
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={() => setShowCreateModal(false)}>Close</Button>
+                                <Button variant="primary" type="submit">Create Task</Button>
+                            </Modal.Footer>
+                        </Form>
+                    </Modal>
+
+                    {/* Edit modal */}
+                    <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Edit Task</Modal.Title>
+                        </Modal.Header>
+
+                        <Form onSubmit={(e) => {
+                            e.preventDefault();
+                            editTask(e, selectedTask._id);
+                        }}>
+                            <Modal.Body>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Title</Form.Label>
+                                    <Form.Control
+                                        name="title"
+                                        type="text"
+                                        defaultValue={selectedTask?.title}
+                                        required maxLength="20"
+                                    />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Task Description</Form.Label>
+                                    <Form.Control
+                                        name="task"
+                                        as="textarea"
+                                        rows={3}
+                                        defaultValue={selectedTask?.task}
+                                        required maxLength="150"
+                                    />
+                                </Form.Group>
+                            </Modal.Body>
+
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={() => setShowEditModal(false)}>Close</Button>
+                                <Button variant="primary" type="submit">Save Changes</Button>
+                            </Modal.Footer>
+                        </Form>
+                    </Modal>
+
+                    {/* Delete Modal */}
+                    <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Delete Task</Modal.Title>
+                        </Modal.Header>
+
+                        <Modal.Body>Are you sure you want to delete this task?</Modal.Body>
 
                         <Modal.Footer>
-                            <Button variant="secondary" onClick={() => setShowCreateModal(false)}>Close</Button>
-                            <Button variant="primary" type="submit">Create Task</Button>
+                            <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>Cancel</Button>
+                            <Button variant="danger" onClick={deleteTask}>Delete</Button>
                         </Modal.Footer>
-                    </Form>
-                </Modal>
+                    </Modal>
 
-                {/* Edit modal */}
-                <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Edit Task</Modal.Title>
-                    </Modal.Header>
+                    <p className="pointer mt-3" onClick={handleClickScrollToTop}>Back to top</p>
+                </Container>
+            </DragDropContext>
 
-                    <Form onSubmit={(e) => {
-                        e.preventDefault();
-                        editTask(e, selectedTask._id);
-                    }}>
-                        <Modal.Body>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Title</Form.Label>
-                                <Form.Control
-                                    name="title"
-                                    type="text"
-                                    defaultValue={selectedTask?.title}
-                                    required maxLength="20"
-                                />
-                            </Form.Group>
-
-                            <Form.Group className="mb-3">
-                                <Form.Label>Task Description</Form.Label>
-                                <Form.Control
-                                    name="task"
-                                    as="textarea"
-                                    rows={3}
-                                    defaultValue={selectedTask?.task}
-                                    required maxLength="150"
-                                />
-                            </Form.Group>
-                        </Modal.Body>
-
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={() => setShowEditModal(false)}>Close</Button>
-                            <Button variant="primary" type="submit">Save Changes</Button>
-                        </Modal.Footer>
-                    </Form>
-                </Modal>
-
-                {/* Delete Modal */}
-                <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Delete Task</Modal.Title>
-                    </Modal.Header>
-
-                    <Modal.Body>Are you sure you want to delete this task?</Modal.Body>
-
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>Cancel</Button>
-                        <Button variant="danger" onClick={deleteTask}>Delete</Button>
-                    </Modal.Footer>
-                </Modal>
-
-                <p className="pointer mt-3" onClick={handleClickScroll}>Back to top</p>
-            </Container>
         </>
     );
 }
