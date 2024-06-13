@@ -27,7 +27,7 @@ const Login = () => {
     };
 
     useEffect(() => {
-        logout()
+        // logout()
         //Remove token always, even if you navigate back
         localStorage.removeItem('accessToken');
     }, [])

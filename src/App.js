@@ -4,14 +4,14 @@ import "./App.css"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import React, { Suspense, lazy } from "react"
 import Login from "./components/Login"
-import { AuthProvider, useAuth } from "./tools/authContext"
+import { AuthProvider } from "./tools/authContext"
 
 const Home = lazy(() => import("./components/Home"))
 const NotFound = lazy(() => import("./components/NotFound"))
 const Register = lazy(() => import("./components/Register"))
 
 const ProtectedRoute = ({ element: Component }) => {
-  const { isAuthenticated } = useAuth()
+  const isAuthenticated = !!localStorage.getItem("accessToken")
   return isAuthenticated ? <Component /> : <Navigate to="/" />
 }
 const App = () => (

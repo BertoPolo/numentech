@@ -13,8 +13,7 @@ const Home = () => {
     const [selectedTask, setSelectedTask] = useState(null);
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [isDragDrop, setIsDragDrop] = useState(true);
-    const [randomNum, setRandomNum] = useState("1");
+    const [randomNum, setRandomNum] = useState("1"); // temporary random ID for droppableId
 
 
     // Array of bg colors for tasks
@@ -144,12 +143,9 @@ const Home = () => {
         setRandomNum(Math.floor(Math.random() * 4).toString())
     }, [tasks]);
 
-    const onDragStart = () => {
-        // setIsDragDrop(true);
-    };
+
 
     const onDragEnd = async (result) => {
-        setIsDragDrop(false);
         if (!result.destination) {
             return;
         }
