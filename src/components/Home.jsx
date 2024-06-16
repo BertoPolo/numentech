@@ -45,7 +45,7 @@ const Home = () => {
         e.preventDefault();
         const title = e.target.title.value
         const task = e.target.task.value
-        // const folder = e.target.task.value
+        const folder = e.target.folder.value
 
         try {
             const response = await fetch(`${process.env.REACT_APP_SERVER}tasks`, {
@@ -54,7 +54,7 @@ const Home = () => {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
                 },
-                body: JSON.stringify({ title, task })
+                body: JSON.stringify({ title, task, folder })
             });
 
             if (response.ok) {
@@ -71,7 +71,7 @@ const Home = () => {
         e.preventDefault();
         const title = e.target.title.value
         const task = e.target.task.value
-        // const folder = e.target.task.value
+        const folder = e.target.folder.value
 
         try {
             const response = await fetch(`${process.env.REACT_APP_SERVER}tasks/${selectedTask._id}`, {
@@ -80,7 +80,7 @@ const Home = () => {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
                 },
-                body: JSON.stringify({ title, task })
+                body: JSON.stringify({ title, task, folder })
             });
 
             if (response.ok) {
@@ -287,6 +287,16 @@ const Home = () => {
                                         required maxLength="150"
                                     />
                                 </Form.Group>
+
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Folder</Form.Label>
+                                    <Form.Control
+                                        name="folder"
+                                        type="text"
+                                        placeholder="Carpeta"
+                                        required maxLength="15"
+                                    />
+                                </Form.Group>
                             </Modal.Body>
 
                             <Modal.Footer>
@@ -325,6 +335,17 @@ const Home = () => {
                                         rows={3}
                                         defaultValue={selectedTask?.task}
                                         required maxLength="150"
+                                    />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Folder</Form.Label>
+                                    <Form.Control
+                                        name="folder"
+                                        type="text"
+                                        placeholder="Carpeta"
+                                        defaultValue={selectedTask?.folder}
+                                        required maxLength="15"
                                     />
                                 </Form.Group>
                             </Modal.Body>
