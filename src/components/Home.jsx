@@ -189,7 +189,7 @@ const Home = () => {
                                 <Droppable key={`folder-${folder}`} droppableId={`folder-${folder}`} isDropDisabled={false}>
                                     {(provided) => (
                                         <div ref={provided.innerRef} {...provided.droppableProps}>
-                                            <div className="folder">{folder}</div>
+                                            <div className="folder pointer">{folder}</div>
                                             {provided.placeholder}
                                         </div>
                                     )}

@@ -24,7 +24,7 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, han
             const body = {
                 email: email,
                 password: password
-            }
+            };
 
             const response = await fetch(`${process.env.REACT_APP_SERVER}users/login`, {
                 method: "POST",
@@ -34,30 +34,29 @@ const FormBox = ({ setIsVerifiying, setIsVerified, isVerifiying, isVerified, han
                 body: JSON.stringify(body),
             });
 
-            if (response !== 201) {
-                const data = await response.json();
+            const data = await response.json();
 
+            if (response.ok) {
                 if (data.isVerified === false) {
                     handleCredentials(email, password);
-                    setIsVerifiying(true); //trigger
-                    setIsVerified(false);//is it really needed? 
-
+                    setIsVerifiying(true); // modal trigger
+                    setIsVerified(false); //is it really needed? 
                 } else {
                     login()
-                    localStorage.setItem("accessToken", data.accessToken);
-                    navigate("/home");
+                    localStorage.setItem("accessToken", data.accessToken)
+                    navigate("/home")
                 }
             } else {
-                console.log("Check your credentials again");
-                setIsError(true);
-                setTimeout(() => setIsError(false), 3000);
+                console.log("Check your credentials again")
+                setIsError(true)
+                setTimeout(() => setIsError(false), 3000)
             }
-
-        } catch (error) { console.log(error) }
-        finally {
+        } catch (error) {
+            console.log(error)
+        } finally {
             setIsLoading(false)
         }
-    }
+    };
 
     useEffect(() => {
         if (isVerified) createToken(email, password);
