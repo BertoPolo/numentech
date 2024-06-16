@@ -123,13 +123,6 @@ const Home = () => {
         setShowDeleteModal(true);
     };
 
-    const handleClickScrollToTop = () => {
-        const element = document.getElementById('task-list');
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-
 
     useEffect(() => {
         getTasks()
@@ -187,7 +180,7 @@ const Home = () => {
             <MyNavbar />
 
             <DragDropContext onDragEnd={onDragEnd}>
-                <Container className='mb-4' id='task-list'>
+                <Container className='mb-4'>
                     <div className='d-flex align-items-center my-4 justify-content-between'>
                         <div className='d-flex'>
 
@@ -257,6 +250,8 @@ const Home = () => {
                             </ListGroup>
                         )}
                     </Droppable>
+
+                    <p className="pointer mt-3" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Back to top</p>
 
                     {/* MODALS */}
 
@@ -371,7 +366,6 @@ const Home = () => {
                         </Modal.Footer>
                     </Modal>
 
-                    <p className="pointer mt-3" onClick={handleClickScrollToTop}>Back to top</p>
                 </Container>
             </DragDropContext>
 
