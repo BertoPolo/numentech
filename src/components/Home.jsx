@@ -173,10 +173,12 @@ const Home = () => {
                 console.error('Error al mover la tarea:', error);
             }
         } else {
-            const reorderedTasks = Array.from(tasks);
-            const [removed] = reorderedTasks.splice(source.index, 1);
-            reorderedTasks.splice(destination.index, 0, removed);
-            setTasks(reorderedTasks);
+            //disabled feature, this is to reorder tasks
+            // const reorderedTasks = Array.from(tasks);
+            // const [removed] = reorderedTasks.splice(source.index, 1);
+            // reorderedTasks.splice(destination.index, 0, removed);
+            // setTasks(reorderedTasks);
+            //
         }
     };
 
@@ -188,11 +190,13 @@ const Home = () => {
                 <Container className='mb-4' id='task-list'>
                     <div className='d-flex align-items-center my-4 justify-content-between'>
                         <div className='d-flex'>
+
+                            {/* Each existing folder  */}
                             {folders.map((folder, index) => (
-                                <Droppable key={`folder-${folder}`} droppableId={`folder-${folder}`}>
+                                <Droppable key={`folder-${folder}`} droppableId={`folder-${folder}`} isDropDisabled={false}>
                                     {(provided) => (
-                                        <div ref={provided.innerRef} {...provided.droppableProps} className="d-flex">
-                                            <div className="mr-2 bg-success p-2">{folder}</div>
+                                        <div ref={provided.innerRef} {...provided.droppableProps}>
+                                            <div className="folder">{folder}</div>
                                             {provided.placeholder}
                                         </div>
                                     )}
@@ -211,19 +215,18 @@ const Home = () => {
                                 {isLoading ? (
                                     <div className="d-flex justify-content-center">
                                         <Spinner animation="border" variant="success">
-                                            <span className="sr-only">Loading...</span>
+                                            {/* <span className="text-success">Loading...</span> */}
                                         </Spinner>
                                     </div>
                                 ) : tasks.length > 0 ? (
                                     tasks.map((task, index) => (
                                         <Draggable key={task._id} draggableId={task._id} index={index}>
-                                            {(provided) => (
+                                            {(provided, snapshot) => (
                                                 <ListGroup.Item
                                                     ref={provided.innerRef}
                                                     {...provided.draggableProps}
                                                     {...provided.dragHandleProps}
-                                                    className={`border-0 rounded d-flex flex-column justify-content-between mb-2 ${bgColors[index % bgColors.length]}`}
-                                                >
+                                                    className={`border-0 rounded d-flex flex-column justify-content-between mb-2 ${bgColors[index % bgColors.length]} ${snapshot.isDragging ? 'is-dragging' : ''}`}                                                >
                                                     <div>
                                                         <h5 className="font-weight-bold">{task.title}</h5>
                                                         <p>{task.task}</p>
@@ -254,45 +257,6 @@ const Home = () => {
                             </ListGroup>
                         )}
                     </Droppable>
-
-                    {/* <ListGroup>
-                    {isLoading ? (
-                        <div className="d-flex justify-content-center">
-                            <Spinner animation="border" variant="success">
-                                <span className="sr-only">Loading...</span>
-                            </Spinner>
-                        </div>
-                    ) : tasks.length > 0 ? (
-                        tasks.map((task, index) => (
-                            <ListGroup.Item
-                                key={task._id}
-                                className={`border-0 rounded d-flex flex-column justify-content-between mb-2 ${bgColors[index % bgColors.length]}`}
-                            >
-                                <div>
-                                    <h5 className="font-weight-bold">{task.title}</h5>
-                                    <p>{task.task}</p>
-                                    <small className="text-muted">Created: {new Date(task.createdAt).toLocaleString()}</small>
-                                </div>
-                                <div className="d-flex justify-content-end">
-                                    <PencilSquare
-                                        onClick={() => handleEditClick(task)}
-                                        className="pointer mx-2"
-                                        style={{ width: '1.2rem', height: '1.2rem' }}
-                                    />
-                                    <Trash
-                                        onClick={() => handleDeleteClick(task)}
-                                        className="pointer text-danger"
-                                        style={{ width: '1.2rem', height: '1.2rem' }}
-                                    />
-                                </div>
-                            </ListGroup.Item>
-                        ))
-                    ) : (
-                        <div className="text-center mt-3">
-                            <p>No tasks saved</p>
-                        </div>
-                    )}
-                </ListGroup> */}
 
                     {/* MODALS */}
 

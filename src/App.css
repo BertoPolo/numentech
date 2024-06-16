@@ -125,3 +125,14 @@ body {
   margin: 0 5px;
 }
 /*  */
+.is-dragging {
+  opacity: 0.5;
+}
+
+.folder {
+  margin-right: 1rem;
+  padding: 1rem;
+  background-color: #87d4ce;
+  width: 100px;
+  pointer-events: "none";
+}
