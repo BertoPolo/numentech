@@ -124,15 +124,27 @@ body {
   text-align: center;
   margin: 0 5px;
 }
+
 /*  */
 .is-dragging {
   opacity: 0.5;
 }
 
+.folder-container {
+  position: relative;
+  display: inline-block;
+  width: 150px;
+  height: 100px;
+  margin: 10px;
+  background-color: #f0f0f0;
+  border: 2px dashed #ccc;
+  border-radius: 5px;
+}
+
 .folder {
-  margin-right: 1rem;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
   padding: 1rem;
   background-color: #87d4ce;
-  width: 100px;
-  pointer-events: "none";
 }

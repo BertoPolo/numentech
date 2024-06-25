@@ -161,40 +161,38 @@ const Home = () => {
 
                 if (response.ok) {
                     getTasks();
+                } else {
+                    console.error('Error al mover la tarea:', response.statusText);
                 }
             } catch (error) {
                 console.error('Error al mover la tarea:', error);
             }
-        } else {
-            //disabled feature, this is to reorder tasks
-            // const reorderedTasks = Array.from(tasks);
-            // const [removed] = reorderedTasks.splice(source.index, 1);
-            // reorderedTasks.splice(destination.index, 0, removed);
-            // setTasks(reorderedTasks);
-            //
         }
     };
+
 
     return (
         <>
             <MyNavbar />
 
-            <DragDropContext onDragEnd={onDragEnd}>
+            <DragDropContext onDragEnd={onDragEnd} isCombineEnabled={true}>
                 <Container className='mb-4'>
                     <div className='d-flex align-items-center my-4 justify-content-between'>
                         <div className='d-flex'>
 
                             {/* Each existing folder  */}
                             {folders.map((folder, index) => (
-                                <Droppable key={`folder-${folder}`} droppableId={`folder-${folder}`} isDropDisabled={false}>
+                                <Droppable key={`folder-${index}`} droppableId={`folder-${folder}`} isCombineEnabled={false}>
                                     {(provided) => (
-                                        <div ref={provided.innerRef} {...provided.droppableProps}>
-                                            <div className="folder pointer">{folder}</div>
+                                        <div ref={provided.innerRef} {...provided.droppableProps} className="folder-container">
+                                            <div className="folder">{folder}</div>
                                             {provided.placeholder}
                                         </div>
                                     )}
                                 </Droppable>
                             ))}
+
+
                         </div>
                         <Button className="btnLogin border-0" onClick={() => setShowCreateModal(true)}>
                             <Plus className="d-inline-block d-sm-none" />
