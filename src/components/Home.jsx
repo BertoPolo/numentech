@@ -7,6 +7,7 @@ import MyNavbar from './Navbar'
 const Home = () => {
     const [tasks, setTasks] = useState([])
     const [folders, setFolders] = useState([]);
+    const [selectedFolder, setSelectedFolder] = useState(""); //if selectedFolder === `folder-${folder}` =>classname= selectedFolder
 
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -16,10 +17,9 @@ const Home = () => {
     const [randomNum, setRandomNum] = useState("1"); // temporary random ID for droppableId
 
 
-    // Array of bg colors for tasks
     const bgColors = ['bg-color-1', 'bg-color-2', 'bg-color-3', 'bg-color-4', 'bg-color-5'];
 
-    const getTasks = async () => {
+    const getTasks = async (folder) => {
         setIsLoading(true)
         try {
             const response = await fetch(`${process.env.REACT_APP_SERVER}tasks`, {
@@ -30,7 +30,13 @@ const Home = () => {
             const data = await response.json();
 
             if (data) {
-                setTasks(data);
+                if (folder) {
+                    setTasks(data.filter(task => task.folder === folder));
+                } else {
+                    setTasks(data);
+                    const uniqueFolders = [...new Set(data.map(task => task.folder))];
+                    setFolders(uniqueFolders);
+                }
             }
             else console.error("No tasks found")
 
@@ -129,10 +135,6 @@ const Home = () => {
     }, [])
 
     useEffect(() => {
-        if (tasks.length > 0) {
-            const uniqueFolders = [...new Set(tasks.map(task => task.folder))];
-            setFolders(uniqueFolders);
-        }
         setRandomNum(Math.floor(Math.random() * 4).toString())
     }, [tasks]);
 
@@ -187,12 +189,12 @@ const Home = () => {
                 <Container className='mb-4'>
                     <div className='d-flex align-items-center my-4 justify-content-between'>
                         <div className='d-flex'>
-
+                            <div className="folder pointer" onClick={() => getTasks()}>All folders</div>
                             {/* Each existing folder  */}
                             {folders.map((folder, index) => (
                                 <Droppable key={`folder-${index}`} droppableId={`folder-${folder}`} isCombineEnabled={false}>
                                     {(provided) => (
-                                        <div ref={provided.innerRef} {...provided.droppableProps} className="folder-container">
+                                        <div ref={provided.innerRef} {...provided.droppableProps} className="folder-container pointer" onClick={() => getTasks(folder)}>
                                             <div className="folder">{folder}</div>
                                             {provided.placeholder}
                                         </div>
