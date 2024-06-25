@@ -191,7 +191,7 @@ const Home = () => {
                 <Container className='mb-4'>
                     <div className='d-flex align-items-center my-4 justify-content-between'>
                         <div className='d-flex'>
-                            <div className="folder pointer" onClick={() => getTasks()}>All folders</div>
+                            <div className="folder pointer" onClick={() => getTasks()}>All tasks</div>
                             {/* Each existing folder  */}
                             {folders.map((folder, index) => (
                                 <Droppable key={`folder-${index}`} droppableId={`folder-${folder}`} isCombineEnabled={false}>
