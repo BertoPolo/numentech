@@ -146,9 +146,9 @@ body {
   text-align: center;
   font-weight: bold;
   padding: 1rem;
-  background-color: #87d4ce;
+  background-color: #bbefbc;
 }
 
 .selectedFolder {
-  background-color: #d4a787;
+  background-color: #e57ecab0;
 }

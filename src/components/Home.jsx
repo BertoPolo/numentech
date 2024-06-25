@@ -30,14 +30,14 @@ const Home = () => {
             const data = await response.json();
 
             if (data) {
+                const uniqueFolders = [...new Set(data.map(task => task.folder))];
                 if (folder) {
                     setTasks(data.filter(task => task.folder === folder));
                     setSelectedFolder(folder)
                 } else {
-                    setTasks(data);
-                    const uniqueFolders = [...new Set(data.map(task => task.folder))];
+                    setTasks(data.filter(task => task.folder === uniqueFolders[0]));
                     setFolders(uniqueFolders);
-                    setSelectedFolder("")
+                    setSelectedFolder(uniqueFolders[0])
                 }
             }
             else console.error("No tasks found")
@@ -191,7 +191,7 @@ const Home = () => {
                 <Container className='mb-4'>
                     <div className='d-flex align-items-center my-4 justify-content-between'>
                         <div className='d-flex'>
-                            <div className="folder pointer" onClick={() => getTasks()}>All tasks</div>
+                            {/* <div className="folder pointer" onClick={() => getTasks()}>All tasks</div> */}
                             {/* Each existing folder  */}
                             {folders.map((folder, index) => (
                                 <Droppable key={`folder-${index}`} droppableId={`folder-${folder}`} isCombineEnabled={false}>
