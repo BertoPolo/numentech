@@ -168,6 +168,14 @@ const Home = () => {
                 console.error('Error al mover la tarea:', error);
             }
         }
+        else {
+            //non sense feature, this is to reorder tasks
+            const reorderedTasks = Array.from(tasks);
+            const [removed] = reorderedTasks.splice(source.index, 1);
+            reorderedTasks.splice(destination.index, 0, removed);
+            setTasks(reorderedTasks);
+
+        }
     };
 
 
