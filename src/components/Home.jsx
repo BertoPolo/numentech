@@ -7,7 +7,7 @@ import MyNavbar from './Navbar'
 const Home = () => {
     const [tasks, setTasks] = useState([])
     const [folders, setFolders] = useState([]);
-    const [selectedFolder, setSelectedFolder] = useState(""); //if selectedFolder === `folder-${folder}` =>classname= selectedFolder
+    const [selectedFolder, setSelectedFolder] = useState("");
 
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -32,10 +32,12 @@ const Home = () => {
             if (data) {
                 if (folder) {
                     setTasks(data.filter(task => task.folder === folder));
+                    setSelectedFolder(folder)
                 } else {
                     setTasks(data);
                     const uniqueFolders = [...new Set(data.map(task => task.folder))];
                     setFolders(uniqueFolders);
+                    setSelectedFolder("")
                 }
             }
             else console.error("No tasks found")
@@ -195,7 +197,7 @@ const Home = () => {
                                 <Droppable key={`folder-${index}`} droppableId={`folder-${folder}`} isCombineEnabled={false}>
                                     {(provided) => (
                                         <div ref={provided.innerRef} {...provided.droppableProps} className="folder-container pointer" onClick={() => getTasks(folder)}>
-                                            <div className="folder">{folder}</div>
+                                            <div className={`folder ${selectedFolder === folder ? "selectedFolder" : ""}`}>{folder}</div>
                                             {provided.placeholder}
                                         </div>
                                     )}
