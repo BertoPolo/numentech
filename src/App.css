@@ -134,10 +134,12 @@ body {
   position: relative;
   display: inline-block;
   width: 150px;
-  height: 100px;
-  margin: 10px;
+  height: 80px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  margin-top: 10px;
   background-color: #f0f0f0;
-  border: 2px dashed #ccc;
+  border: 0.5px solid #e7e1e1;
   border-radius: 5px;
 }
 
@@ -145,10 +147,10 @@ body {
   border-radius: 5px;
   text-align: center;
   font-weight: bold;
-  padding: 1rem;
+  padding: 0.8rem;
   background-color: #bbefbc;
 }
 
 .selectedFolder {
-  background-color: #e57ecab0;
+  background-color: #f0f0f0;
 }

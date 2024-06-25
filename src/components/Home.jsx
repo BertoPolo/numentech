@@ -141,7 +141,6 @@ const Home = () => {
     }, [tasks]);
 
 
-
     const onDragEnd = async (result) => {
         if (!result.destination) {
             return;
@@ -261,7 +260,7 @@ const Home = () => {
                         )}
                     </Droppable>
 
-                    <p className="pointer mt-3" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Back to top</p>
+                    <p className="pointer mt-3" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}><u>Back to top</u></p>
 
                     {/* MODALS */}
 
