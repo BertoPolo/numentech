@@ -137,6 +137,7 @@ const Home = () => {
     }, [])
 
     useEffect(() => {
+        // temporary random ID for droppableId
         setRandomNum(Math.floor(Math.random() * 4).toString())
     }, [tasks]);
 
